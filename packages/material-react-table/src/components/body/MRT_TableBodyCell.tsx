@@ -21,6 +21,7 @@ import { getCommonMRTCellStyles } from '../../utils/style.utils';
 import { parseFromValuesOrFunc } from '../../utils/utils';
 import { MRT_CopyButton } from '../buttons/MRT_CopyButton';
 import { MRT_EditCellTextField } from '../inputs/MRT_EditCellTextField';
+import { Colors } from '@blueprintjs/core';
 
 export interface MRT_TableBodyCellProps<TData extends MRT_RowData>
   extends TableCellProps {
@@ -228,8 +229,8 @@ export const MRT_TableBodyCell = <TData extends MRT_RowData>({
   };
 
   return (
-    <TableCell
-      align={theme.direction === 'rtl' ? 'right' : 'left'}
+    <td
+      // align={theme.direction === 'rtl' ? 'right' : 'left'}
       data-index={staticColumnIndex}
       data-pinned={!!isColumnPinned || undefined}
       {...tableCellProps}
@@ -237,13 +238,13 @@ export const MRT_TableBodyCell = <TData extends MRT_RowData>({
       onDoubleClick={handleDoubleClick}
       onDragEnter={handleDragEnter}
       onDragOver={handleDragOver}
-      sx={(theme) => ({
+      css={(theme: any) => ({
         '&:hover': {
           outline:
             actionCell?.id === cell.id ||
             (editDisplayMode === 'cell' && isEditable) ||
             (editDisplayMode === 'table' && (isCreating || isEditing))
-              ? `1px solid ${theme.palette.grey[500]}`
+              ? `1px solid ${Colors.GRAY5}`
               : undefined,
           textOverflow: 'clip',
         },
@@ -254,9 +255,7 @@ export const MRT_TableBodyCell = <TData extends MRT_RowData>({
             ? 'pointer'
             : 'inherit',
         outline:
-          actionCell?.id === cell.id
-            ? `1px solid ${theme.palette.grey[500]}`
-            : undefined,
+          actionCell?.id === cell.id ? `1px solid ${Colors.GRAY5}` : undefined,
         outlineOffset: '-1px',
         overflow: 'hidden',
         p:
@@ -324,7 +323,7 @@ export const MRT_TableBodyCell = <TData extends MRT_RowData>({
           )}
         </>
       )}
-    </TableCell>
+    </td>
   );
 };
 

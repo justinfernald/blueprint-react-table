@@ -1,5 +1,4 @@
 import { type MouseEvent } from 'react';
-import IconButton, { type IconButtonProps } from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
 import { useTheme } from '@mui/material/styles';
 import {
@@ -9,9 +8,10 @@ import {
 } from '../../types';
 import { getCommonTooltipProps } from '../../utils/style.utils';
 import { parseFromValuesOrFunc } from '../../utils/utils';
+import { Button, ButtonProps, Icon } from '@blueprintjs/core';
 
 export interface MRT_ExpandButtonProps<TData extends MRT_RowData>
-  extends IconButtonProps {
+  extends ButtonProps {
   row: MRT_Row<TData>;
   staticRowIndex?: number;
   table: MRT_TableInstance<TData>;
@@ -26,7 +26,6 @@ export const MRT_ExpandButton = <TData extends MRT_RowData>({
   const {
     getState,
     options: {
-      icons: { ExpandMoreIcon },
       localization,
       muiExpandButtonProps,
       positionExpandColumn,
@@ -44,7 +43,7 @@ export const MRT_ExpandButton = <TData extends MRT_RowData>({
   const canExpand = row.getCanExpand();
   const isExpanded = row.getIsExpanded();
 
-  const handleToggleExpand = (event: MouseEvent<HTMLButtonElement>) => {
+  const handleToggleExpand = (event: MouseEvent<HTMLElement>) => {
     event.stopPropagation();
     row.toggleExpanded();
     iconButtonProps?.onClick?.(event);
@@ -62,24 +61,26 @@ export const MRT_ExpandButton = <TData extends MRT_RowData>({
       }
     >
       <span>
-        <IconButton
+        <Button
+          minimal
           aria-label={localization.expand}
           disabled={!canExpand && !detailPanel}
-          {...iconButtonProps}
           onClick={handleToggleExpand}
-          sx={(theme) => ({
+          {...iconButtonProps}
+          css={(theme: any) => ({
             height: density === 'compact' ? '1.75rem' : '2.25rem',
             opacity: !canExpand && !detailPanel ? 0.3 : 1,
             [theme.direction === 'rtl' || positionExpandColumn === 'last'
-              ? 'mr'
-              : 'ml']: `${row.depth * 16}px`,
+              ? 'marginRight'
+              : 'marginLeft']: `${row.depth * 16}px`,
             width: density === 'compact' ? '1.75rem' : '2.25rem',
-            ...(parseFromValuesOrFunc(iconButtonProps?.sx, theme) as any),
+            ...(parseFromValuesOrFunc(iconButtonProps?.css, theme) as any),
           })}
           title={undefined}
         >
           {iconButtonProps?.children ?? (
-            <ExpandMoreIcon
+            <Icon
+              icon="chevron-down"
               style={{
                 transform: `rotate(${
                   !canExpand && !renderDetailPanel
@@ -95,7 +96,7 @@ export const MRT_ExpandButton = <TData extends MRT_RowData>({
               }}
             />
           )}
-        </IconButton>
+        </Button>
       </span>
     </Tooltip>
   );

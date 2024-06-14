@@ -45,7 +45,7 @@ export const MaxWidthAndCentered = () => (
     data={data}
     muiTablePaperProps={{
       sx: {
-        m: 'auto',
+        margin: 'auto',
         maxWidth: '800px',
       },
     }}

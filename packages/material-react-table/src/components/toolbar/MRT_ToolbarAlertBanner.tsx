@@ -115,12 +115,12 @@ export const MRT_ToolbarAlertBanner = <TData extends MRT_RowData>({
           borderRadius: 0,
           fontSize: '1rem',
           left: 0,
-          mb: stackAlertBanner
+          marginBottom: stackAlertBanner
             ? 0
             : positionToolbarAlertBanner === 'bottom'
               ? '-1rem'
               : undefined,
-          p: 0,
+          padding: 0,
           position: 'relative',
           right: 0,
           top: 0,

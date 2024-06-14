@@ -80,9 +80,9 @@ export const MRT_TableBody = <TData extends MRT_RowData>({
     <>
       {!rowPinningDisplayMode?.includes('sticky') &&
         getIsSomeRowsPinned('top') && (
-          <TableBody
+          <body
             {...tableBodyProps}
-            sx={(theme) => ({
+            css={(theme) => ({
               display: layoutMode?.startsWith('grid') ? 'grid' : undefined,
               position: 'sticky',
               top: tableHeadHeight - 1,
@@ -102,9 +102,9 @@ export const MRT_TableBody = <TData extends MRT_RowData>({
                 <MRT_TableBodyRow key={row.id} {...props} />
               );
             })}
-          </TableBody>
+          </body>
         )}
-      <TableBody
+      <tbody
         {...tableBodyProps}
         sx={(theme) => ({
           display: layoutMode?.startsWith('grid') ? 'grid' : undefined,
@@ -137,7 +137,8 @@ export const MRT_TableBody = <TData extends MRT_RowData>({
                       maxWidth: `min(100vw, ${
                         tablePaperRef.current?.clientWidth ?? 360
                       }px)`,
-                      py: '2rem',
+                      paddingTop: '2rem',
+                      paddingBottom: '2rem',
                       textAlign: 'center',
                       width: '100%',
                     }}
@@ -184,12 +185,12 @@ export const MRT_TableBody = <TData extends MRT_RowData>({
               })}
             </>
           ))}
-      </TableBody>
+      </tbody>
       {!rowPinningDisplayMode?.includes('sticky') &&
         getIsSomeRowsPinned('bottom') && (
-          <TableBody
+          <tbody
             {...tableBodyProps}
-            sx={(theme) => ({
+            css={(theme) => ({
               bottom: tableFooterHeight - 1,
               display: layoutMode?.startsWith('grid') ? 'grid' : undefined,
               position: 'sticky',
@@ -209,7 +210,7 @@ export const MRT_TableBody = <TData extends MRT_RowData>({
                 <MRT_TableBodyRow key={row.id} {...props} />
               );
             })}
-          </TableBody>
+          </tbody>
         )}
     </>
   );

@@ -1,3 +1,4 @@
+import { ButtonProps } from '@blueprintjs/core';
 import {
   type Dispatch,
   type MutableRefObject,
@@ -43,7 +44,6 @@ import {
 import { type AlertProps } from '@mui/material/Alert';
 import { type AutocompleteProps } from '@mui/material/Autocomplete';
 import { type BoxProps } from '@mui/material/Box';
-import { type ButtonProps } from '@mui/material/Button';
 import { type CheckboxProps } from '@mui/material/Checkbox';
 import { type ChipProps } from '@mui/material/Chip';
 import { type CircularProgressProps } from '@mui/material/CircularProgress';
@@ -939,8 +939,8 @@ export type MRT_TableOptions<TData extends MRT_RowData> = Omit<
     | ((props: {
         column: MRT_Column<TData>;
         table: MRT_TableInstance<TData>;
-      }) => IconButtonProps)
-    | IconButtonProps;
+      }) => ButtonProps)
+    | ButtonProps;
   muiCopyButtonProps?:
     | ((props: {
         cell: MRT_Cell<TData>;
@@ -976,15 +976,15 @@ export type MRT_TableOptions<TData extends MRT_RowData> = Omit<
       }) => TextFieldProps)
     | TextFieldProps;
   muiExpandAllButtonProps?:
-    | ((props: { table: MRT_TableInstance<TData> }) => IconButtonProps)
-    | IconButtonProps;
+    | ((props: { table: MRT_TableInstance<TData> }) => ButtonProps)
+    | ButtonProps;
   muiExpandButtonProps?:
     | ((props: {
         row: MRT_Row<TData>;
         staticRowIndex?: number;
         table: MRT_TableInstance<TData>;
-      }) => IconButtonProps)
-    | IconButtonProps;
+      }) => ButtonProps)
+    | ButtonProps;
   muiFilterAutocompleteProps?:
     | ((props: {
         column: MRT_Column<TData>;

@@ -109,7 +109,8 @@ export const MRT_ShowHideColumnsMenuItems = <TData extends MRT_RowData>({
         sx={(theme) => ({
           alignItems: 'center',
           justifyContent: 'flex-start',
-          my: 0,
+          marginTop: 0,
+          marginBottom: 0,
           opacity: isDragging ? 0.5 : 1,
           outline: isDragging
             ? `2px dashed ${theme.palette.grey[500]}`
@@ -117,8 +118,9 @@ export const MRT_ShowHideColumnsMenuItems = <TData extends MRT_RowData>({
               ? `2px dashed ${draggingBorderColor}`
               : 'none',
           outlineOffset: '-2px',
-          pl: `${(column.depth + 0.5) * 2}rem`,
-          py: '6px',
+          paddingLeft: `${(column.depth + 0.5) * 2}rem`,
+          paddingTop: '6px',
+          paddingBottom: '6px',
           ...(parseFromValuesOrFunc(rest?.sx, theme) as any),
         })}
       >
@@ -153,7 +155,7 @@ export const MRT_ShowHideColumnsMenuItems = <TData extends MRT_RowData>({
               componentsProps={{
                 typography: {
                   sx: {
-                    mb: 0,
+                    marginBottom: 0,
                     opacity: columnDefType !== 'display' ? 1 : 0.5,
                   },
                 },

@@ -102,10 +102,11 @@ export const MRT_FilterRangeSlider = <TData extends MRT_RowData>({
           },
         }}
         sx={(theme) => ({
-          m: 'auto',
+          margin: 'auto',
           minWidth: `${column.getSize() - 50}px`,
-          mt: !showChangeModeButton ? '10px' : '6px',
-          px: '4px',
+          marginTop: !showChangeModeButton ? '10px' : '6px',
+          paddingLeft: '4px',
+          paddingRight: '4px',
           width: 'calc(100% - 8px)',
           ...(parseFromValuesOrFunc(sliderProps?.sx, theme) as any),
         })}
@@ -115,7 +116,7 @@ export const MRT_FilterRangeSlider = <TData extends MRT_RowData>({
           sx={{
             fontSize: '0.75rem',
             lineHeight: '0.8rem',
-            m: '-3px -6px',
+            margin: '-3px -6px',
             whiteSpace: 'nowrap',
           }}
         >

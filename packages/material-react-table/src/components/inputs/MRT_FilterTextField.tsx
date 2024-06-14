@@ -345,8 +345,9 @@ export const MRT_FilterTextField = <TData extends MRT_RowData>({
             : !filterChipLabel
               ? '120px'
               : 'auto',
-      mx: '-2px',
-      p: 0,
+      marginLeft: '-2px',
+      marginRight: '-2px',
+      padding: 0,
       width: 'calc(100% + 4px)',
       ...(parseFromValuesOrFunc(textFieldProps?.sx, theme) as any),
     }),
@@ -490,7 +491,7 @@ export const MRT_FilterTextField = <TData extends MRT_RowData>({
                         alignItems: 'center',
                         display: 'flex',
                         gap: '0.5rem',
-                        m: 0,
+                        margin: 0,
                       }}
                       value={value}
                     >

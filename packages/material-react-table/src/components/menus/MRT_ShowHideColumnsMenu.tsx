@@ -1,6 +1,6 @@
 import { useMemo, useState } from 'react';
+import { Button } from '@blueprintjs/core';
 import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
 import Divider from '@mui/material/Divider';
 import Menu, { type MenuProps } from '@mui/material/Menu';
 import { MRT_ShowHideColumnsMenuItems } from './MRT_ShowHideColumnsMenuItems';
@@ -101,8 +101,8 @@ export const MRT_ShowHideColumnsMenu = <TData extends MRT_RowData>({
         sx={{
           display: 'flex',
           justifyContent: 'space-between',
-          p: '0.5rem',
-          pt: 0,
+          padding: '0.5rem',
+          paddingTop: 0,
         }}
       >
         {enableHiding && (

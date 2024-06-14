@@ -259,7 +259,7 @@ export const CustomAlertBannerHeadOverlay = () => (
             alignItems: 'center',
             display: 'flex',
             gap: '6px',
-            p: '4px 12px',
+            padding: '4px 12px',
             width: '100%',
           }}
         >

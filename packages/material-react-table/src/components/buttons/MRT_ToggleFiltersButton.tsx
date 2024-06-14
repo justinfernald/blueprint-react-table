@@ -1,9 +1,9 @@
-import IconButton, { type IconButtonProps } from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
 import { type MRT_RowData, type MRT_TableInstance } from '../../types';
+import { Button, ButtonProps } from '@blueprintjs/core';
 
 export interface MRT_ToggleFiltersButtonProps<TData extends MRT_RowData>
-  extends IconButtonProps {
+  extends ButtonProps {
   table: MRT_TableInstance<TData>;
 }
 
@@ -13,10 +13,7 @@ export const MRT_ToggleFiltersButton = <TData extends MRT_RowData>({
 }: MRT_ToggleFiltersButtonProps<TData>) => {
   const {
     getState,
-    options: {
-      icons: { FilterListIcon, FilterListOffIcon },
-      localization,
-    },
+    options: { localization },
     setShowColumnFilters,
   } = table;
   const { showColumnFilters } = getState();
@@ -27,14 +24,14 @@ export const MRT_ToggleFiltersButton = <TData extends MRT_RowData>({
 
   return (
     <Tooltip title={rest?.title ?? localization.showHideFilters}>
-      <IconButton
+      <Button
+        minimal
+        icon={showColumnFilters ? 'filter' : 'filter-remove'}
         aria-label={localization.showHideFilters}
         onClick={handleToggleShowFilters}
         {...rest}
         title={undefined}
-      >
-        {showColumnFilters ? <FilterListOffIcon /> : <FilterListIcon />}
-      </IconButton>
+      />
     </Tooltip>
   );
 };

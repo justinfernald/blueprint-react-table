@@ -1,5 +1,4 @@
 import { useMemo } from 'react';
-import Table, { type TableProps } from '@mui/material/Table';
 import { useMRT_ColumnVirtualizer } from '../../hooks/useMRT_ColumnVirtualizer';
 import { type MRT_RowData, type MRT_TableInstance } from '../../types';
 import { parseCSSVarId } from '../../utils/style.utils';
@@ -7,8 +6,10 @@ import { parseFromValuesOrFunc } from '../../utils/utils';
 import { MRT_TableBody, Memo_MRT_TableBody } from '../body/MRT_TableBody';
 import { MRT_TableFooter } from '../footer/MRT_TableFooter';
 import { MRT_TableHead } from '../head/MRT_TableHead';
+import { HTMLTable, HTMLTableProps } from '@blueprintjs/core';
 
-export interface MRT_TableProps<TData extends MRT_RowData> extends TableProps {
+export interface MRT_TableProps<TData extends MRT_RowData>
+  extends HTMLTableProps {
   table: MRT_TableInstance<TData>;
 }
 
@@ -60,11 +61,11 @@ export const MRT_Table = <TData extends MRT_RowData>({
   };
 
   return (
-    <Table
+    <HTMLTable
       stickyHeader={enableStickyHeader || isFullScreen}
       {...tableProps}
       style={{ ...columnSizeVars, ...tableProps?.style }}
-      sx={(theme) => ({
+      css={(theme) => ({
         borderCollapse: 'separate',
         display: layoutMode?.startsWith('grid') ? 'grid' : undefined,
         position: 'relative',
@@ -79,6 +80,6 @@ export const MRT_Table = <TData extends MRT_RowData>({
         <MRT_TableBody {...commonTableGroupProps} />
       )}
       {enableTableFooter && <MRT_TableFooter {...commonTableGroupProps} />}
-    </Table>
+    </HTMLTable>
   );
 };

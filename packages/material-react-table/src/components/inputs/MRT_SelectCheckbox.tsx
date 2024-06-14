@@ -98,7 +98,7 @@ export const MRT_SelectCheckbox = <TData extends MRT_RowData>({
     },
     sx: (theme: Theme) => ({
       height: density === 'compact' ? '1.75rem' : '2.5rem',
-      m: density !== 'compact' ? '-0.4rem' : undefined,
+      margin: density !== 'compact' ? '-0.4rem' : undefined,
       width: density === 'compact' ? '1.75rem' : '2.5rem',
       zIndex: 0,
       ...parseFromValuesOrFunc(checkboxProps?.sx, theme),

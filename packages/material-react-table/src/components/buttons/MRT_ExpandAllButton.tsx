@@ -1,11 +1,11 @@
-import IconButton, { type IconButtonProps } from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
 import { type MRT_RowData, type MRT_TableInstance } from '../../types';
 import { getCommonTooltipProps } from '../../utils/style.utils';
 import { parseFromValuesOrFunc } from '../../utils/utils';
+import { Button, ButtonProps, Icon } from '@blueprintjs/core';
 
 export interface MRT_ExpandAllButtonProps<TData extends MRT_RowData>
-  extends IconButtonProps {
+  extends ButtonProps {
   table: MRT_TableInstance<TData>;
 }
 
@@ -46,23 +46,25 @@ export const MRT_ExpandAllButton = <TData extends MRT_RowData>({
       }
     >
       <span>
-        <IconButton
+        <Button
+          minimal
           aria-label={localization.expandAll}
           disabled={
             isLoading || (!renderDetailPanel && !getCanSomeRowsExpand())
           }
           onClick={() => toggleAllRowsExpanded(!isAllRowsExpanded)}
           {...iconButtonProps}
-          sx={(theme) => ({
+          css={(theme) => ({
             height: density === 'compact' ? '1.75rem' : '2.25rem',
-            mt: density !== 'compact' ? '-0.25rem' : undefined,
+            marginTop: density !== 'compact' ? '-0.25rem' : undefined,
             width: density === 'compact' ? '1.75rem' : '2.25rem',
-            ...(parseFromValuesOrFunc(iconButtonProps?.sx, theme) as any),
+            ...(parseFromValuesOrFunc(iconButtonProps?.css, theme) as any),
           })}
           title={undefined}
         >
           {iconButtonProps?.children ?? (
-            <KeyboardDoubleArrowDownIcon
+            <Icon
+              icon={'double-chevron-down'}
               style={{
                 transform: `rotate(${
                   isAllRowsExpanded ? -180 : getIsSomeRowsExpanded() ? -90 : 0
@@ -71,7 +73,7 @@ export const MRT_ExpandAllButton = <TData extends MRT_RowData>({
               }}
             />
           )}
-        </IconButton>
+        </Button>
       </span>
     </Tooltip>
   );

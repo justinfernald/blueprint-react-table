@@ -87,7 +87,7 @@ export const MRT_TopToolbar = <TData extends MRT_RowData>({
           display: 'flex',
           gap: '0.5rem',
           justifyContent: 'space-between',
-          p: '0.5rem',
+          padding: '0.5rem',
           position: stackAlertBanner ? 'relative' : 'absolute',
           right: 0,
           top: 0,

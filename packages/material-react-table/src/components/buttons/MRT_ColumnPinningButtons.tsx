@@ -1,5 +1,4 @@
 import Box, { type BoxProps } from '@mui/material/Box';
-import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
 import {
   type MRT_Column,
@@ -7,6 +6,7 @@ import {
   type MRT_TableInstance,
 } from '../../types';
 import { parseFromValuesOrFunc } from '../../utils/utils';
+import { Button } from '@blueprintjs/core';
 
 export interface MRT_ColumnPinningButtonsProps<TData extends MRT_RowData>
   extends BoxProps {
@@ -41,29 +41,36 @@ export const MRT_ColumnPinningButtons = <TData extends MRT_RowData>({
     >
       {column.getIsPinned() ? (
         <Tooltip title={localization.unpin}>
-          <IconButton onClick={() => handlePinColumn(false)} size="small">
-            <PushPinIcon />
-          </IconButton>
+          <Button
+            minimal
+            icon="pin"
+            onClick={() => handlePinColumn(false)}
+            // size="small"
+          />
         </Tooltip>
       ) : (
         <>
           <Tooltip title={localization.pinToLeft}>
-            <IconButton onClick={() => handlePinColumn('left')} size="small">
-              <PushPinIcon
-                style={{
-                  transform: 'rotate(90deg)',
-                }}
-              />
-            </IconButton>
+            <Button
+              minimal
+              icon="pin"
+              onClick={() => handlePinColumn('left')}
+              // size="small"
+              style={{
+                transform: 'rotate(90deg)',
+              }}
+            />
           </Tooltip>
           <Tooltip title={localization.pinToRight}>
-            <IconButton onClick={() => handlePinColumn('right')} size="small">
-              <PushPinIcon
-                style={{
-                  transform: 'rotate(-90deg)',
-                }}
-              />
-            </IconButton>
+            <Button
+              minimal
+              icon="pin"
+              onClick={() => handlePinColumn('right')}
+              // size="small"
+              style={{
+                transform: 'rotate(-90deg)',
+              }}
+            />
           </Tooltip>
         </>
       )}

@@ -1,6 +1,6 @@
 import { type ReactNode } from 'react';
+import { Button } from '@blueprintjs/core';
 import Box from '@mui/material/Box';
-import IconButton from '@mui/material/IconButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import MenuItem, { type MenuItemProps } from '@mui/material/MenuItem';
 import { type MRT_RowData, type MRT_TableInstance } from '../../types';
@@ -32,8 +32,10 @@ export const MRT_ActionMenuItem = <TData extends MRT_RowData>({
         alignItems: 'center',
         justifyContent: 'space-between',
         minWidth: '120px',
-        my: 0,
-        py: '6px',
+        marginTop: 0,
+        marginBottom: 0,
+        paddingTop: '6px',
+        paddingBottom: '6px',
       }}
       {...rest}
     >
@@ -47,14 +49,14 @@ export const MRT_ActionMenuItem = <TData extends MRT_RowData>({
         {label}
       </Box>
       {onOpenSubMenu && (
-        <IconButton
+        <Button
+          minimal
+          icon="arrow-right"
           onClick={onOpenSubMenu as any}
           onMouseEnter={onOpenSubMenu as any}
           size="small"
           sx={{ p: 0 }}
-        >
-          <ArrowRightIcon />
-        </IconButton>
+        />
       )}
     </MenuItem>
   );

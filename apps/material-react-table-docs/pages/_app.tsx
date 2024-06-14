@@ -1,4 +1,7 @@
 import '../styles/globals.css';
+import '@blueprintjs/core/lib/css/blueprint.css';
+import '@blueprintjs/icons/lib/css/blueprint-icons.css';
+
 import { useState } from 'react';
 import { type AppProps } from 'next/app';
 import Head from 'next/head';

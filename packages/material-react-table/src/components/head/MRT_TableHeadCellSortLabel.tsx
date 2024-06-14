@@ -9,6 +9,7 @@ import {
   type MRT_TableInstance,
 } from '../../types';
 import { parseFromValuesOrFunc } from '../../utils/utils';
+import { Icon } from '@blueprintjs/core';
 
 export interface MRT_TableHeadCellSortLabelProps<TData extends MRT_RowData>
   extends TableSortLabelProps {
@@ -23,10 +24,7 @@ export const MRT_TableHeadCellSortLabel = <TData extends MRT_RowData>({
 }: MRT_TableHeadCellSortLabelProps<TData>) => {
   const {
     getState,
-    options: {
-      icons: { ArrowDownwardIcon, SyncAltIcon },
-      localization,
-    },
+    options: { localization },
   } = table;
   const { column } = header;
   const { columnDef } = column;
@@ -61,16 +59,12 @@ export const MRT_TableHeadCellSortLabel = <TData extends MRT_RowData>({
         <TableSortLabel
           IconComponent={
             !isSorted
-              ? (props) => (
-                  <SyncAltIcon
-                    {...props}
-                    direction={direction}
-                    style={{
-                      transform: 'rotate(-90deg) scaleX(0.9) translateX(-1px)',
-                    }}
+              ? (props) => <Icon icon="double-caret-vertical" />
+              : (props) => (
+                  <Icon
+                    icon={direction === 'asc' ? 'caret-down' : 'caret-up'}
                   />
                 )
-              : ArrowDownwardIcon
           }
           active
           aria-label={sortTooltip}

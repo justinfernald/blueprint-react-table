@@ -46,7 +46,7 @@ export const Footer = () => {
         target="_blank"
         sx={{
           height: '3rem',
-          m: '2rem auto',
+          margin: '2rem auto',
           cursor: 'pointer',
           textAlign: 'center',
         }}
@@ -57,7 +57,7 @@ export const Footer = () => {
       <Typography
         variant="subtitle1"
         sx={{
-          mt: '2rem',
+          marginTop: '2rem',
           textAlign: 'center',
         }}
       >
@@ -94,7 +94,7 @@ export const Footer = () => {
       <EthicalAd id="footer" text />
       <Typography
         sx={{
-          mt: '2rem',
+          marginTop: '2rem',
           textAlign: 'center',
         }}
         variant="subtitle2"
@@ -116,8 +116,8 @@ export const Footer = () => {
           borderRadius: '8px',
           borderBottomLeftRadius: '0',
           borderBottomRightRadius: '0',
-          mt: '50px',
-          p: '1.5rem',
+          marginTop: '50px',
+          padding: '1.5rem',
         }}
       >
         <Typography color="text.secondary" textAlign="center">
@@ -177,7 +177,7 @@ export const Footer = () => {
           sx={{
             display: 'flex',
             flexWrap: 'wrap',
-            mt: '1rem',
+            marginTop: '1rem',
             gap: '0.5rem',
             flexDirection: {
               xs: 'column',

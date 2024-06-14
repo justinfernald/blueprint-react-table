@@ -1,5 +1,5 @@
 import { type MouseEvent, useState } from 'react';
-import IconButton, { type IconButtonProps } from '@mui/material/IconButton';
+import { Button, ButtonProps } from '@blueprintjs/core';
 import Tooltip from '@mui/material/Tooltip';
 import { MRT_EditActionButtons } from './MRT_EditActionButtons';
 import {
@@ -17,14 +17,14 @@ const commonIconButtonStyles = {
     opacity: 1,
   },
   height: '2rem',
-  ml: '10px',
+  marginLeft: '10px',
   opacity: 0.5,
   transition: 'opacity 150ms',
   width: '2rem',
 };
 
 export interface MRT_ToggleRowActionMenuButtonProps<TData extends MRT_RowData>
-  extends IconButtonProps {
+  extends ButtonProps {
   cell: MRT_Cell<TData>;
   row: MRT_Row<TData>;
   staticRowIndex?: number;
@@ -44,7 +44,6 @@ export const MRT_ToggleRowActionMenuButton = <TData extends MRT_RowData>({
       createDisplayMode,
       editDisplayMode,
       enableEditing,
-      icons: { EditIcon, MoreHorizIcon },
       localization,
       renderRowActionMenuItems,
       renderRowActions,
@@ -85,27 +84,27 @@ export const MRT_ToggleRowActionMenuButton = <TData extends MRT_RowData>({
         parseFromValuesOrFunc(enableEditing, row) &&
         ['modal', 'row'].includes(editDisplayMode!) ? (
         <Tooltip placement="right" title={localization.edit}>
-          <IconButton
+          <Button
+            minimal
+            icon="edit"
             aria-label={localization.edit}
             onClick={handleStartEditMode}
-            sx={commonIconButtonStyles}
+            css={commonIconButtonStyles}
             {...rest}
-          >
-            <EditIcon />
-          </IconButton>
+          />
         </Tooltip>
       ) : renderRowActionMenuItems ? (
         <>
           <Tooltip {...getCommonTooltipProps()} title={localization.rowActions}>
-            <IconButton
+            <Button
+              minimal
+              icon="more"
               aria-label={localization.rowActions}
               onClick={handleOpenRowActionMenu}
-              size="small"
-              sx={commonIconButtonStyles}
+              // small // unsure if this is wanted
+              css={commonIconButtonStyles}
               {...rest}
-            >
-              <MoreHorizIcon />
-            </IconButton>
+            />
           </Tooltip>
           <MRT_RowActionMenu
             anchorEl={anchorEl}

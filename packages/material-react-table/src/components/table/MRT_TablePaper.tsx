@@ -1,4 +1,4 @@
-import Paper, { type PaperProps } from '@mui/material/Paper';
+import { Card, CardProps, Elevation } from '@blueprintjs/core';
 import { useTheme } from '@mui/material';
 import { MRT_TableContainer } from './MRT_TableContainer';
 import { type MRT_RowData, type MRT_TableInstance } from '../../types';
@@ -7,7 +7,7 @@ import { MRT_BottomToolbar } from '../toolbar/MRT_BottomToolbar';
 import { MRT_TopToolbar } from '../toolbar/MRT_TopToolbar';
 
 export interface MRT_TablePaperProps<TData extends MRT_RowData>
-  extends PaperProps {
+  extends CardProps {
   table: MRT_TableInstance<TData>;
 }
 
@@ -37,8 +37,8 @@ export const MRT_TablePaper = <TData extends MRT_RowData>({
   const theme = useTheme();
 
   return (
-    <Paper
-      elevation={2}
+    <Card
+      elevation={2 as any}
       {...paperProps}
       ref={(ref: HTMLDivElement) => {
         tablePaperRef.current = ref;
@@ -66,7 +66,7 @@ export const MRT_TablePaper = <TData extends MRT_RowData>({
           : {}),
         ...paperProps?.style,
       }}
-      sx={(theme) => ({
+      css={(theme) => ({
         backgroundColor: baseBackgroundColor,
         backgroundImage: 'unset',
         overflow: 'hidden',
@@ -83,6 +83,6 @@ export const MRT_TablePaper = <TData extends MRT_RowData>({
         (parseFromValuesOrFunc(renderBottomToolbar, { table }) ?? (
           <MRT_BottomToolbar table={table} />
         ))}
-    </Paper>
+    </Card>
   );
 };

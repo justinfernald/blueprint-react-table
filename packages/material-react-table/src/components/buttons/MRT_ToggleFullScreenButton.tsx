@@ -1,10 +1,10 @@
 import { useState } from 'react';
-import IconButton, { type IconButtonProps } from '@mui/material/IconButton';
+import { Button, ButtonProps } from '@blueprintjs/core';
 import Tooltip from '@mui/material/Tooltip';
 import { type MRT_RowData, type MRT_TableInstance } from '../../types';
 
 export interface MRT_ToggleFullScreenButtonProps<TData extends MRT_RowData>
-  extends IconButtonProps {
+  extends ButtonProps {
   table: MRT_TableInstance<TData>;
 }
 
@@ -14,10 +14,7 @@ export const MRT_ToggleFullScreenButton = <TData extends MRT_RowData>({
 }: MRT_ToggleFullScreenButtonProps<TData>) => {
   const {
     getState,
-    options: {
-      icons: { FullscreenExitIcon, FullscreenIcon },
-      localization,
-    },
+    options: { localization },
     setIsFullScreen,
   } = table;
   const { isFullScreen } = getState();
@@ -34,16 +31,16 @@ export const MRT_ToggleFullScreenButton = <TData extends MRT_RowData>({
       open={tooltipOpened}
       title={rest?.title ?? localization.toggleFullScreen}
     >
-      <IconButton
+      <Button
+        minimal
+        icon={isFullScreen ? 'minimize' : 'fullscreen'}
         aria-label={localization.toggleFullScreen}
         onClick={handleToggleFullScreen}
         onMouseEnter={() => setTooltipOpened(true)}
         onMouseLeave={() => setTooltipOpened(false)}
         {...rest}
         title={undefined}
-      >
-        {isFullScreen ? <FullscreenExitIcon /> : <FullscreenIcon />}
-      </IconButton>
+      />
     </Tooltip>
   );
 };

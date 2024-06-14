@@ -93,15 +93,17 @@ export const MRT_TablePagination = <TData extends MRT_RowData>({
         gap: '8px',
         justifyContent: { md: 'space-between', sm: 'center' },
         justifySelf: 'flex-end',
-        mt:
+        marginTop:
           position === 'top' &&
           enableToolbarInternalActions &&
           !showGlobalFilter
             ? '3rem'
             : undefined,
         position: 'relative',
-        px: '8px',
-        py: '12px',
+        paddingLeft: '8px',
+        paddingRight: '8px',
+        paddingTop: '12px',
+        paddingBottom: '12px',
         zIndex: 2,
       }}
     >

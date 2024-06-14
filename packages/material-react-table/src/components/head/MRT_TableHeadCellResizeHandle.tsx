@@ -66,10 +66,11 @@ export const MRT_TableHeadCellResizeHandle = <TData extends MRT_RowData>({
         },
         cursor: 'col-resize',
         left: columnResizeDirection === 'rtl' ? lr : undefined,
-        ml: columnResizeDirection === 'rtl' ? mx : undefined,
-        mr: columnResizeDirection === 'ltr' ? mx : undefined,
+        marginLeft: columnResizeDirection === 'rtl' ? mx : undefined,
+        marginRight: columnResizeDirection === 'ltr' ? mx : undefined,
         position: 'absolute',
-        px: '4px',
+        paddingLeft: '4px',
+        paddingRight: '4px',
         right: columnResizeDirection === 'ltr' ? lr : undefined,
       })}
     >

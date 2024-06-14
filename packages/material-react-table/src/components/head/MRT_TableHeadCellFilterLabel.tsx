@@ -134,9 +134,9 @@ export const MRT_TableHeadCellFilterLabel = <TData extends MRT_RowData = {}>({
               {...rest}
               sx={(theme) => ({
                 height: '16px',
-                ml: '4px',
+                marginLeft: '4px',
                 opacity: isFilterActive ? 1 : 0.3,
-                p: '8px',
+                padding: '8px',
                 transform: 'scale(0.75)',
                 transition: 'all 150ms ease-in-out',
                 width: '16px',

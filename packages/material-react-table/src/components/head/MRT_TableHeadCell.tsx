@@ -155,7 +155,7 @@ export const MRT_TableHeadCell = <TData extends MRT_RowData>({
     }) ?? columnDef.header;
 
   return (
-    <TableCell
+    <td
       align={
         columnDefType === 'group'
           ? 'center'
@@ -177,48 +177,51 @@ export const MRT_TableHeadCell = <TData extends MRT_RowData>({
         }
       }}
       {...tableCellProps}
-      sx={(theme: Theme) => ({
-        '& :hover': {
-          '.MuiButtonBase-root': {
-            opacity: 1,
+      css={
+        ((theme: Theme) => ({
+          '& :hover': {
+            '.MuiButtonBase-root': {
+              opacity: 1,
+            },
           },
-        },
-        flexDirection: layoutMode?.startsWith('grid') ? 'column' : undefined,
-        fontWeight: 'bold',
-        overflow: 'visible',
-        p:
-          density === 'compact'
-            ? '0.5rem'
-            : density === 'comfortable'
-              ? columnDefType === 'display'
-                ? '0.75rem'
-                : '1rem'
-              : columnDefType === 'display'
-                ? '1rem 1.25rem'
-                : '1.5rem',
-        pb:
-          columnDefType === 'display'
-            ? 0
-            : showColumnFilters || density === 'compact'
-              ? '0.4rem'
-              : '0.6rem',
-        pt:
-          columnDefType === 'group' || density === 'compact'
-            ? '0.25rem'
-            : density === 'comfortable'
-              ? '.75rem'
-              : '1.25rem',
-        userSelect: enableMultiSort && column.getCanSort() ? 'none' : undefined,
-        verticalAlign: 'top',
-        ...getCommonMRTCellStyles({
-          column,
-          header,
-          table,
-          tableCellProps,
-          theme,
-        }),
-        ...draggingBorders,
-      })}
+          flexDirection: layoutMode?.startsWith('grid') ? 'column' : undefined,
+          fontWeight: 'bold',
+          overflow: 'visible',
+          padding:
+            density === 'compact'
+              ? '0.5rem'
+              : density === 'comfortable'
+                ? columnDefType === 'display'
+                  ? '0.75rem'
+                  : '1rem'
+                : columnDefType === 'display'
+                  ? '1rem 1.25rem'
+                  : '1.5rem',
+          paddingBottom:
+            columnDefType === 'display'
+              ? 0
+              : showColumnFilters || density === 'compact'
+                ? '0.4rem'
+                : '0.6rem',
+          paddingTop:
+            columnDefType === 'group' || density === 'compact'
+              ? '0.25rem'
+              : density === 'comfortable'
+                ? '.75rem'
+                : '1.25rem',
+          userSelect:
+            enableMultiSort && column.getCanSort() ? 'none' : undefined,
+          verticalAlign: 'top',
+          ...getCommonMRTCellStyles({
+            column,
+            header,
+            table,
+            tableCellProps,
+            theme,
+          }),
+          ...draggingBorders,
+        })) as any
+      }
     >
       {header.isPlaceholder
         ? null
@@ -316,6 +319,6 @@ export const MRT_TableHeadCell = <TData extends MRT_RowData>({
       {columnFilterDisplayMode === 'subheader' && column.getCanFilter() && (
         <MRT_TableHeadCellFilterContainer header={header} table={table} />
       )}
-    </TableCell>
+    </td>
   );
 };

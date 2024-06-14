@@ -81,7 +81,7 @@ export const SideBarItems = ({
                 >
                   <Box
                     sx={{
-                      ml: `${depth}rem`,
+                      marginLeft: `${depth}rem`,
                     }}
                   >
                     {label}

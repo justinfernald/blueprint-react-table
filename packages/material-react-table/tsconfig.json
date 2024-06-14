@@ -27,6 +27,8 @@
     "sourceMap": true,
     "strict": true,
     "target": "ES6",
+    "jsxImportSource": "@emotion/react",
+    "types": ["vite/client", "@emotion/react/types/css-prop"]
   },
   "references": [
     {

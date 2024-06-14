@@ -35,7 +35,7 @@ const HomePage = () => {
               xl: '5rem',
             },
             fontWeight: 'bold',
-            mt: '4rem',
+            marginTop: '4rem',
             lineHeight: {
               xs: '2.5rem',
               sm: '3.5rem',
@@ -81,7 +81,7 @@ const HomePage = () => {
               md: '2.2rem',
               lg: '2.25rem',
             },
-            mb: '1rem',
+            marginBottom: '1rem',
             textAlign: 'center',
             lineHeight: '2.25rem',
             fontWeight: 'normal',
@@ -251,7 +251,7 @@ const HomePage = () => {
       <Typography
         sx={{
           textAlign: 'center',
-          mt: '5rem',
+          marginTop: '5rem',
           fontSize: { xs: '1.5rem', md: '2rem', xl: '2.5rem' },
         }}
         variant="h3"

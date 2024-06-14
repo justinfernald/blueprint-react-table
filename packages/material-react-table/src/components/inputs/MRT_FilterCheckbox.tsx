@@ -1,4 +1,3 @@
-import Checkbox, { type CheckboxProps } from '@mui/material/Checkbox';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Tooltip from '@mui/material/Tooltip';
 import {
@@ -8,6 +7,7 @@ import {
 } from '../../types';
 import { getCommonTooltipProps } from '../../utils/style.utils';
 import { parseFromValuesOrFunc } from '../../utils/utils';
+import { Checkbox, CheckboxProps } from '@blueprintjs/core';
 
 export interface MRT_FilterCheckboxProps<TData extends MRT_RowData>
   extends CheckboxProps {
@@ -59,7 +59,9 @@ export const MRT_FilterCheckbox = <TData extends MRT_RowData>({
             indeterminate={column.getFilterValue() === undefined}
             size={density === 'compact' ? 'small' : 'medium'}
             {...checkboxProps}
-            onChange={(e, checked) => {
+            onChange={(e) => {
+              const checked = e.currentTarget.checked;
+
               column.setFilterValue(
                 column.getFilterValue() === undefined
                   ? 'true'

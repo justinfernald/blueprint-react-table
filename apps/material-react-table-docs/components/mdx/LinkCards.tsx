@@ -33,7 +33,7 @@ export const LinkCards = () => {
   return (
     <Box
       sx={{
-        mt: '2rem',
+        marginTop: '2rem',
         textAlign: 'center',
       }}
     >

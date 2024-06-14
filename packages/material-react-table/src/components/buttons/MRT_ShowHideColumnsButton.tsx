@@ -1,11 +1,11 @@
 import { type MouseEvent, useState } from 'react';
-import IconButton, { type IconButtonProps } from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
 import { type MRT_RowData, type MRT_TableInstance } from '../../types';
 import { MRT_ShowHideColumnsMenu } from '../menus/MRT_ShowHideColumnsMenu';
+import { Button, ButtonProps } from '@blueprintjs/core';
 
 export interface MRT_ShowHideColumnsButtonProps<TData extends MRT_RowData>
-  extends IconButtonProps {
+  extends ButtonProps {
   table: MRT_TableInstance<TData>;
 }
 
@@ -14,10 +14,7 @@ export const MRT_ShowHideColumnsButton = <TData extends MRT_RowData>({
   ...rest
 }: MRT_ShowHideColumnsButtonProps<TData>) => {
   const {
-    options: {
-      icons: { ViewColumnIcon },
-      localization,
-    },
+    options: { localization },
   } = table;
 
   const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
@@ -29,14 +26,14 @@ export const MRT_ShowHideColumnsButton = <TData extends MRT_RowData>({
   return (
     <>
       <Tooltip title={rest?.title ?? localization.showHideColumns}>
-        <IconButton
+        <Button
+          minimal
+          icon="eye-open"
           aria-label={localization.showHideColumns}
           onClick={handleClick}
           {...rest}
           title={undefined}
-        >
-          <ViewColumnIcon />
-        </IconButton>
+        />
       </Tooltip>
       {anchorEl && (
         <MRT_ShowHideColumnsMenu

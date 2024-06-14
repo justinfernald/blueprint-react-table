@@ -10,7 +10,7 @@ const blankColProps = {
   children: null,
   sx: {
     minWidth: 0,
-    p: 0,
+    padding: 0,
     width: 0,
   },
 };

@@ -1,7 +1,6 @@
+import { Button, ButtonProps, Icon, Spinner } from '@blueprintjs/core';
 import Box, { type BoxProps } from '@mui/material/Box';
-import Button from '@mui/material/Button';
 import CircularProgress from '@mui/material/CircularProgress';
-import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
 import {
   type MRT_Row,
@@ -26,7 +25,6 @@ export const MRT_EditActionButtons = <TData extends MRT_RowData>({
   const {
     getState,
     options: {
-      icons: { CancelIcon, SaveIcon },
       localization,
       onCreatingRowCancel,
       onCreatingRowSave,
@@ -95,36 +93,39 @@ export const MRT_EditActionButtons = <TData extends MRT_RowData>({
       {variant === 'icon' ? (
         <>
           <Tooltip title={localization.cancel}>
-            <IconButton aria-label={localization.cancel} onClick={handleCancel}>
-              <CancelIcon />
-            </IconButton>
+            <Button
+              minimal
+              icon="cross-circle"
+              aria-label={localization.cancel}
+              onClick={handleCancel}
+            />
           </Tooltip>
           {((isCreating && onCreatingRowSave) ||
             (isEditing && onEditingRowSave)) && (
             <Tooltip title={localization.save}>
-              <IconButton
+              <Button
+                minimal
                 aria-label={localization.save}
                 color="info"
                 disabled={isSaving}
                 onClick={handleSubmitRow}
               >
-                {isSaving ? <CircularProgress size={18} /> : <SaveIcon />}
-              </IconButton>
+                {isSaving ? <Spinner size={18} /> : <Icon icon="floppy-disk" />}
+              </Button>
             </Tooltip>
           )}
         </>
       ) : (
         <>
-          <Button onClick={handleCancel} sx={{ minWidth: '100px' }}>
+          <Button minimal onClick={handleCancel} css={{ minWidth: '100px' }}>
             {localization.cancel}
           </Button>
           <Button
             disabled={isSaving}
             onClick={handleSubmitRow}
-            sx={{ minWidth: '100px' }}
-            variant="contained"
+            css={{ minWidth: '100px' }}
           >
-            {isSaving && <CircularProgress color="inherit" size={18} />}
+            {isSaving && <Spinner size={18} />}
             {localization.save}
           </Button>
         </>

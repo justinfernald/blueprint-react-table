@@ -163,7 +163,7 @@ export const MRT_TableBodyRow = <TData extends MRT_RowData>({
 
   return (
     <>
-      <TableRow
+      <tr
         data-index={renderDetailPanel ? staticRowIndex * 2 : staticRowIndex}
         data-pinned={!!isRowPinned || undefined}
         data-selected={isRowSelected || undefined}
@@ -183,7 +183,7 @@ export const MRT_TableBodyRow = <TData extends MRT_RowData>({
             : undefined,
           ...tableRowProps?.style,
         }}
-        sx={(theme: Theme) => ({
+        css={(theme: Theme) => ({
           '&:hover td:after': cellHighlightColorHover
             ? {
                 backgroundColor: alpha(cellHighlightColorHover, 0.3),
@@ -265,7 +265,7 @@ export const MRT_TableBodyRow = <TData extends MRT_RowData>({
         {virtualPaddingRight ? (
           <td style={{ display: 'flex', width: virtualPaddingRight }} />
         ) : null}
-      </TableRow>
+      </tr>
       {renderDetailPanel && !row.getIsGrouped() && (
         <MRT_TableDetailPanel
           parentRowRef={rowRef}

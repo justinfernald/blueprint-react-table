@@ -142,7 +142,7 @@ export const MRT_EditCellTextField = <TData extends MRT_RowData>({
           : {}),
         ...textFieldProps.InputProps,
         sx: (theme) => ({
-          mb: 0,
+          marginBottom: 0,
           ...(parseFromValuesOrFunc(
             textFieldProps?.InputProps?.sx,
             theme,
@@ -175,7 +175,7 @@ export const MRT_EditCellTextField = <TData extends MRT_RowData>({
                 alignItems: 'center',
                 display: 'flex',
                 gap: '0.5rem',
-                m: 0,
+                margin: 0,
               }}
               value={value}
             >

@@ -39,7 +39,7 @@ export const MRT_TableHead = <TData extends MRT_RowData>({
   const stickyHeader = enableStickyHeader || isFullScreen;
 
   return (
-    <TableHead
+    <thead
       {...tableHeadProps}
       ref={(ref: HTMLTableSectionElement) => {
         tableHeadRef.current = ref;
@@ -48,7 +48,7 @@ export const MRT_TableHead = <TData extends MRT_RowData>({
           tableHeadProps.ref.current = ref;
         }
       }}
-      sx={(theme) => ({
+      css={(theme) => ({
         display: layoutMode?.startsWith('grid') ? 'grid' : undefined,
         opacity: 0.97,
         position: stickyHeader ? 'sticky' : 'relative',
@@ -86,6 +86,6 @@ export const MRT_TableHead = <TData extends MRT_RowData>({
             />
           ))
       )}
-    </TableHead>
+    </thead>
   );
 };

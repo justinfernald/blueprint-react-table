@@ -138,7 +138,7 @@ export const MRT_GlobalFilterTextField = <TData extends MRT_RowData>({
           ),
           ...textFieldProps.InputProps,
           sx: (theme) => ({
-            mb: 0,
+            marginBottom: 0,
             ...(parseFromValuesOrFunc(
               textFieldProps?.InputProps?.sx,
               theme,

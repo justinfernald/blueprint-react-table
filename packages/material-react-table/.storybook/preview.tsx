@@ -1,4 +1,8 @@
+import '@blueprintjs/core/lib/css/blueprint.css';
+import '@blueprintjs/icons/lib/css/blueprint-icons.css';
+
 import React, { useEffect, useState } from 'react';
+import { Classes } from '@blueprintjs/core';
 import { addons } from '@storybook/preview-api';
 import { Preview } from '@storybook/react';
 import { useDarkMode, DARK_MODE_EVENT_NAME } from 'storybook-dark-mode';
@@ -62,38 +66,28 @@ const preview: Preview = {
         <ThemeProvider theme={theme}>
           <CssBaseline />
           <LocalizationProvider dateAdapter={AdapterDayjs}>
-            <Typography
-              sx={{
-                pb: '0.5rem',
-                color: useDarkMode() ? '#fff' : '#666',
-              }}
-              variant="subtitle2"
-            >
-              Looking for the main docs site? Click{' '}
-              <Link
-                href="https://www.material-react-table.com"
-                target="_blank"
-                rel="noopener"
-              >
-                here.
-              </Link>
-            </Typography>
-            <Typography
-              variant="subtitle2"
-              sx={{
-                pb: '1rem',
-                color: useDarkMode() ? '#fff' : '#666',
-              }}
-            >
-              View Source code for these examples in the code tab below or{' '}
-              <Link
-                href="https://github.com/KevinVandy/material-react-table/tree/v2/packages/material-react-table/stories/features"
-                target="_blank"
-              >
-                here on GitHub.
-              </Link>
-            </Typography>
-            <Story {...context} />
+            <div className={isDark ? Classes.DARK : undefined}>
+              <p className={Classes.TEXT_SMALL}>
+                Looking for the main docs site? Click{' '}
+                <Link
+                  href="https://www.material-react-table.com"
+                  target="_blank"
+                  rel="noopener"
+                >
+                  here.
+                </Link>
+              </p>
+              <p className={Classes.TEXT_SMALL}>
+                View Source code for these examples in the code tab below or{' '}
+                <Link
+                  href="https://github.com/KevinVandy/material-react-table/tree/v2/packages/material-react-table/stories/features"
+                  target="_blank"
+                >
+                  here on GitHub.
+                </Link>
+              </p>
+              <Story {...context} />
+            </div>
           </LocalizationProvider>
         </ThemeProvider>
       );

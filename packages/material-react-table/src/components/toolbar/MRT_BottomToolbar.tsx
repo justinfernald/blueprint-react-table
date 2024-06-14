@@ -82,7 +82,7 @@ export const MRT_BottomToolbar = <TData extends MRT_RowData>({
           boxSizing: 'border-box',
           display: 'flex',
           justifyContent: 'space-between',
-          p: '0.5rem',
+          padding: '0.5rem',
           width: '100%',
         }}
       >

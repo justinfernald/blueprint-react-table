@@ -1,9 +1,9 @@
-import IconButton, { type IconButtonProps } from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
 import { type MRT_RowData, type MRT_TableInstance } from '../../types';
+import { Button, ButtonProps } from '@blueprintjs/core';
 
 export interface MRT_ToggleGlobalFilterButtonProps<TData extends MRT_RowData>
-  extends IconButtonProps {
+  extends ButtonProps {
   table: MRT_TableInstance<TData>;
 }
 
@@ -13,11 +13,7 @@ export const MRT_ToggleGlobalFilterButton = <TData extends MRT_RowData>({
 }: MRT_ToggleGlobalFilterButtonProps<TData>) => {
   const {
     getState,
-    options: {
-      icons: { SearchIcon, SearchOffIcon },
-
-      localization,
-    },
+    options: { localization },
     refs: { searchInputRef },
     setShowGlobalFilter,
   } = table;
@@ -30,15 +26,16 @@ export const MRT_ToggleGlobalFilterButton = <TData extends MRT_RowData>({
 
   return (
     <Tooltip title={rest?.title ?? localization.showHideSearch}>
-      <IconButton
+      <Button
+        minimal
+        icon={showGlobalFilter ? 'disable' : 'search'}
         aria-label={rest?.title ?? localization.showHideSearch}
         disabled={!!globalFilter}
         onClick={handleToggleSearch}
         {...rest}
         title={undefined}
-      >
-        {showGlobalFilter ? <SearchOffIcon /> : <SearchIcon />}
-      </IconButton>
+      />
+      {/* {showGlobalFilter ? <SearchOffIcon /> : <SearchIcon />} */}
     </Tooltip>
   );
 };

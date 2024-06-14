@@ -1,9 +1,9 @@
-import IconButton, { type IconButtonProps } from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
 import { type MRT_RowData, type MRT_TableInstance } from '../../types';
+import { Button, ButtonProps, Icon } from '@blueprintjs/core';
 
 export interface MRT_ToggleDensePaddingButtonProps<TData extends MRT_RowData>
-  extends IconButtonProps {
+  extends ButtonProps {
   table: MRT_TableInstance<TData>;
 }
 
@@ -13,10 +13,7 @@ export const MRT_ToggleDensePaddingButton = <TData extends MRT_RowData>({
 }: MRT_ToggleDensePaddingButtonProps<TData>) => {
   const {
     getState,
-    options: {
-      icons: { DensityLargeIcon, DensityMediumIcon, DensitySmallIcon },
-      localization,
-    },
+    options: { localization },
     setDensity,
   } = table;
   const { density } = getState();
@@ -33,20 +30,23 @@ export const MRT_ToggleDensePaddingButton = <TData extends MRT_RowData>({
 
   return (
     <Tooltip title={rest?.title ?? localization.toggleDensity}>
-      <IconButton
+      <Button
+        minimal
         aria-label={localization.toggleDensity}
         onClick={handleToggleDensePadding}
         {...rest}
         title={undefined}
       >
-        {density === 'compact' ? (
-          <DensitySmallIcon />
-        ) : density === 'comfortable' ? (
-          <DensityMediumIcon />
-        ) : (
-          <DensityLargeIcon />
-        )}
-      </IconButton>
+        <Icon
+          icon={
+            density === 'compact'
+              ? 'align-justify'
+              : density === 'comfortable'
+                ? 'list'
+                : 'menu'
+          }
+        />
+      </Button>
     </Tooltip>
   );
 };
