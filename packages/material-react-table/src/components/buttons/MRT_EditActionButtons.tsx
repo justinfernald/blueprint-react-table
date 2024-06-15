@@ -117,7 +117,7 @@ export const MRT_EditActionButtons = <TData extends MRT_RowData>({
         </>
       ) : (
         <>
-          <Button minimal onClick={handleCancel} css={{ minWidth: '100px' }}>
+          <Button onClick={handleCancel} css={{ minWidth: '100px' }}>
             {localization.cancel}
           </Button>
           <Button

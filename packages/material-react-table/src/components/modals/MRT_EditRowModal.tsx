@@ -1,7 +1,3 @@
-import Dialog, { type DialogProps } from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogTitle from '@mui/material/DialogTitle';
 import Stack from '@mui/material/Stack';
 import {
   type MRT_Row,
@@ -11,6 +7,12 @@ import {
 import { parseFromValuesOrFunc } from '../../utils/utils';
 import { MRT_EditActionButtons } from '../buttons/MRT_EditActionButtons';
 import { MRT_EditCellTextField } from '../inputs/MRT_EditCellTextField';
+import {
+  Dialog,
+  DialogBody,
+  DialogFooter,
+  DialogProps,
+} from '@blueprintjs/core';
 
 export interface MRT_EditRowModalProps<TData extends MRT_RowData>
   extends Partial<DialogProps> {
@@ -60,9 +62,8 @@ export const MRT_EditRowModal = <TData extends MRT_RowData>({
 
   return (
     <Dialog
-      fullWidth
-      maxWidth="xs"
-      onClose={(event, reason) => {
+      title={localization.edit}
+      onClose={(e) => {
         if (creatingRow) {
           onCreatingRowCancel?.({ row, table });
           setCreatingRow(null);
@@ -71,9 +72,9 @@ export const MRT_EditRowModal = <TData extends MRT_RowData>({
           setEditingRow(null);
         }
         row._valuesCache = {} as any; //reset values cache
-        dialogProps.onClose?.(event, reason);
+        // dialogProps.onClose?.(event, reason);
       }}
-      open={open}
+      isOpen={open}
       {...dialogProps}
     >
       {((creatingRow &&
@@ -88,10 +89,7 @@ export const MRT_EditRowModal = <TData extends MRT_RowData>({
           table,
         })) ?? (
         <>
-          <DialogTitle sx={{ textAlign: 'center' }}>
-            {localization.edit}
-          </DialogTitle>
-          <DialogContent>
+          <DialogBody>
             <form onSubmit={(e) => e.preventDefault()}>
               <Stack
                 sx={{
@@ -103,10 +101,10 @@ export const MRT_EditRowModal = <TData extends MRT_RowData>({
                 {internalEditComponents}
               </Stack>
             </form>
-          </DialogContent>
-          <DialogActions sx={{ p: '1.25rem' }}>
+          </DialogBody>
+          <DialogFooter css={{ padding: '1.25rem' }}>
             <MRT_EditActionButtons row={row} table={table} variant="text" />
-          </DialogActions>
+          </DialogFooter>
         </>
       )}
     </Dialog>

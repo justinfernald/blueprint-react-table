@@ -1,7 +1,4 @@
 import Badge from '@mui/material/Badge';
-import TableSortLabel, {
-  type TableSortLabelProps,
-} from '@mui/material/TableSortLabel';
 import Tooltip from '@mui/material/Tooltip';
 import {
   type MRT_Header,
@@ -9,10 +6,10 @@ import {
   type MRT_TableInstance,
 } from '../../types';
 import { parseFromValuesOrFunc } from '../../utils/utils';
-import { Icon } from '@blueprintjs/core';
+import { Button, ButtonProps } from '@blueprintjs/core';
 
 export interface MRT_TableHeadCellSortLabelProps<TData extends MRT_RowData>
-  extends TableSortLabelProps {
+  extends ButtonProps {
   header: MRT_Header<TData>;
   table: MRT_TableInstance<TData>;
 }
@@ -56,25 +53,32 @@ export const MRT_TableHeadCellSortLabel = <TData extends MRT_RowData>({
         badgeContent={sorting.length > 1 ? column.getSortIndex() + 1 : 0}
         overlap="circular"
       >
-        <TableSortLabel
-          IconComponent={
-            !isSorted
-              ? (props) => <Icon icon="double-caret-vertical" />
-              : (props) => (
-                  <Icon
-                    icon={direction === 'asc' ? 'caret-down' : 'caret-up'}
-                  />
-                )
+        <Button
+          minimal
+          // IconComponent={
+          //   !isSorted
+          //     ? (props) => <Icon icon="double-caret-vertical" />
+          //     : (props) => (
+          //         <Icon
+          //           icon={direction === 'asc' ? 'caret-down' : 'caret-up'}
+          //         />
+          //       )
+          // }
+          icon={
+            isSorted
+              ? direction === 'asc'
+                ? 'caret-down'
+                : 'caret-up'
+              : 'double-caret-vertical'
           }
-          active
           aria-label={sortTooltip}
-          direction={direction}
+          // direction={direction}
           onClick={(e) => {
             e.stopPropagation();
             header.column.getToggleSortingHandler()?.(e);
           }}
           {...rest}
-          sx={(theme) => ({
+          css={(theme: any) => ({
             '.MuiTableSortLabel-icon': {
               color: `${
                 theme.palette.mode === 'dark'
@@ -86,7 +90,7 @@ export const MRT_TableHeadCellSortLabel = <TData extends MRT_RowData>({
             opacity: isSorted ? 1 : 0.3,
             transition: 'all 150ms ease-in-out',
             width: '3ch',
-            ...(parseFromValuesOrFunc(rest?.sx, theme) as any),
+            ...(parseFromValuesOrFunc(rest?.css, theme) as any),
           })}
         />
       </Badge>

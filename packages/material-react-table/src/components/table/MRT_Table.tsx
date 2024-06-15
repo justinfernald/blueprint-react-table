@@ -62,14 +62,14 @@ export const MRT_Table = <TData extends MRT_RowData>({
 
   return (
     <HTMLTable
-      stickyHeader={enableStickyHeader || isFullScreen}
+      // stickyHeader={enableStickyHeader || isFullScreen}
       {...tableProps}
       style={{ ...columnSizeVars, ...tableProps?.style }}
       css={(theme) => ({
         borderCollapse: 'separate',
         display: layoutMode?.startsWith('grid') ? 'grid' : undefined,
         position: 'relative',
-        ...(parseFromValuesOrFunc(tableProps?.sx, theme) as any),
+        ...(parseFromValuesOrFunc(tableProps?.css, theme) as any),
       })}
     >
       {!!Caption && <caption>{Caption}</caption>}

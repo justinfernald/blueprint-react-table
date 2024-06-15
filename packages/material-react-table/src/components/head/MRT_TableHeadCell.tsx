@@ -156,13 +156,13 @@ export const MRT_TableHeadCell = <TData extends MRT_RowData>({
 
   return (
     <td
-      align={
-        columnDefType === 'group'
-          ? 'center'
-          : theme.direction === 'rtl'
-            ? 'right'
-            : 'left'
-      }
+      // align={
+      //   columnDefType === 'group'
+      //     ? 'center'
+      //     : theme.direction === 'rtl'
+      //       ? 'right'
+      //       : 'left'
+      // }
       colSpan={header.colSpan}
       data-index={staticColumnIndex}
       data-pinned={!!isColumnPinned || undefined}

@@ -1,5 +1,4 @@
 import { type MouseEvent, useState } from 'react';
-import Menu, { type MenuProps } from '@mui/material/Menu';
 import { MRT_ActionMenuItem } from './MRT_ActionMenuItem';
 import { MRT_FilterOptionMenu } from './MRT_FilterOptionMenu';
 import {
@@ -7,19 +6,22 @@ import {
   type MRT_RowData,
   type MRT_TableInstance,
 } from '../../types';
+import { Button, Icon, Menu, Popover, PopoverProps } from '@blueprintjs/core';
 
 export interface MRT_ColumnActionMenuProps<TData extends MRT_RowData>
-  extends Partial<MenuProps> {
-  anchorEl: HTMLElement | null;
+  extends Partial<PopoverProps> {
   header: MRT_Header<TData>;
-  setAnchorEl: (anchorEl: HTMLElement | null) => void;
   table: MRT_TableInstance<TData>;
+  isOpen: boolean;
+  setIsOpen: (isOpen: boolean) => void;
+  onClick?: (event: MouseEvent<HTMLElement>) => void;
 }
 
 export const MRT_ColumnActionMenu = <TData extends MRT_RowData>({
-  anchorEl,
+  setIsOpen,
+  isOpen,
+  onClick,
   header,
-  setAnchorEl,
   table,
   ...rest
 }: MRT_ColumnActionMenuProps<TData>) => {
@@ -69,44 +71,44 @@ export const MRT_ColumnActionMenu = <TData extends MRT_RowData>({
 
   const handleClearSort = () => {
     column.clearSorting();
-    setAnchorEl(null);
+    setIsOpen(false);
   };
 
   const handleSortAsc = () => {
     column.toggleSorting(false);
-    setAnchorEl(null);
+    setIsOpen(false);
   };
 
   const handleSortDesc = () => {
     column.toggleSorting(true);
-    setAnchorEl(null);
+    setIsOpen(false);
   };
 
   const handleResetColumnSize = () => {
     setColumnSizingInfo((old) => ({ ...old, isResizingColumn: false }));
     column.resetSize();
-    setAnchorEl(null);
+    setIsOpen(false);
   };
 
   const handleHideColumn = () => {
     column.toggleVisibility(false);
-    setAnchorEl(null);
+    setIsOpen(false);
   };
 
   const handlePinColumn = (pinDirection: 'left' | 'right' | false) => {
     column.pin(pinDirection);
-    setAnchorEl(null);
+    setIsOpen(false);
   };
 
   const handleGroupByColumn = () => {
     column.toggleGrouping();
     setColumnOrder((old: any) => ['mrt-row-expand', ...old]);
-    setAnchorEl(null);
+    setIsOpen(false);
   };
 
   const handleClearFilter = () => {
     column.setFilterValue(undefined);
-    setAnchorEl(null);
+    setIsOpen(false);
     if (['empty', 'notEmpty'].includes(columnDef._filterFn)) {
       setColumnFilterFns((prev) => ({
         ...prev,
@@ -118,14 +120,14 @@ export const MRT_ColumnActionMenu = <TData extends MRT_RowData>({
   const handleFilterByColumn = () => {
     setShowColumnFilters(true);
     queueMicrotask(() => filterInputRefs.current[`${column.id}-0`]?.focus());
-    setAnchorEl(null);
+    setIsOpen(false);
   };
 
   const handleShowAllColumns = () => {
     getAllLeafColumns()
       .filter((col) => col.columnDef.enableHiding !== false)
       .forEach((col) => col.toggleVisibility(true));
-    setAnchorEl(null);
+    setIsOpen(false);
   };
 
   const handleOpenFilterModeMenu = (event: MouseEvent<HTMLElement>) => {
@@ -150,7 +152,7 @@ export const MRT_ColumnActionMenu = <TData extends MRT_RowData>({
       ? [
           enableSortingRemoval !== false && (
             <MRT_ActionMenuItem
-              icon={<ClearAllIcon />}
+              icon={'clean'}
               key={0}
               label={localization.clearSort}
               onClick={handleClearSort}
@@ -159,9 +161,7 @@ export const MRT_ColumnActionMenu = <TData extends MRT_RowData>({
           ),
           <MRT_ActionMenuItem
             disabled={column.getIsSorted() === 'asc'}
-            icon={
-              <SortIcon style={{ transform: 'rotate(180deg) scaleX(-1)' }} />
-            }
+            icon={'sort-asc'}
             key={1}
             label={localization.sortByColumnAsc?.replace(
               '{column}',
@@ -172,8 +172,8 @@ export const MRT_ColumnActionMenu = <TData extends MRT_RowData>({
           />,
           <MRT_ActionMenuItem
             disabled={column.getIsSorted() === 'desc'}
-            divider={enableColumnFilters || enableGrouping || enableHiding}
-            icon={<SortIcon />}
+            // divider={enableColumnFilters || enableGrouping || enableHiding}
+            icon={'sort-desc'}
             key={2}
             label={localization.sortByColumnDesc?.replace(
               '{column}',
@@ -192,7 +192,7 @@ export const MRT_ColumnActionMenu = <TData extends MRT_RowData>({
               (Array.isArray(columnFilterValue) &&
                 !columnFilterValue.filter((value) => value).length)
             }
-            icon={<FilterListOffIcon />}
+            icon={'filter-remove'}
             key={3}
             label={localization.clearFilter}
             onClick={handleClearFilter}
@@ -201,8 +201,8 @@ export const MRT_ColumnActionMenu = <TData extends MRT_RowData>({
           columnFilterDisplayMode === 'subheader' && (
             <MRT_ActionMenuItem
               disabled={showColumnFilters && !enableColumnFilterModes}
-              divider={enableGrouping || enableHiding}
-              icon={<FilterListIcon />}
+              // divider={enableGrouping || enableHiding}
+              icon={'filter-list'}
               key={4}
               label={localization.filterByColumn?.replace(
                 '{column}',
@@ -234,8 +234,8 @@ export const MRT_ColumnActionMenu = <TData extends MRT_RowData>({
     ...(enableGrouping && column.getCanGroup()
       ? [
           <MRT_ActionMenuItem
-            divider={enableColumnPinning}
-            icon={<DynamicFeedIcon />}
+            // divider={enableColumnPinning}
+            icon={'feed'}
             key={6}
             label={localization[
               column.getIsGrouped() ? 'ungroupByColumn' : 'groupByColumn'
@@ -249,7 +249,7 @@ export const MRT_ColumnActionMenu = <TData extends MRT_RowData>({
       ? [
           <MRT_ActionMenuItem
             disabled={column.getIsPinned() === 'left' || !column.getCanPin()}
-            icon={<PushPinIcon style={{ transform: 'rotate(90deg)' }} />}
+            icon={<Icon icon="pin" style={{ transform: 'rotate(90deg)' }} />}
             key={7}
             label={localization.pinToLeft}
             onClick={() => handlePinColumn('left')}
@@ -257,7 +257,7 @@ export const MRT_ColumnActionMenu = <TData extends MRT_RowData>({
           />,
           <MRT_ActionMenuItem
             disabled={column.getIsPinned() === 'right' || !column.getCanPin()}
-            icon={<PushPinIcon style={{ transform: 'rotate(-90deg)' }} />}
+            icon={<Icon icon="pin" style={{ transform: 'rotate(-90deg)' }} />}
             key={8}
             label={localization.pinToRight}
             onClick={() => handlePinColumn('right')}
@@ -265,8 +265,8 @@ export const MRT_ColumnActionMenu = <TData extends MRT_RowData>({
           />,
           <MRT_ActionMenuItem
             disabled={!column.getIsPinned()}
-            divider={enableHiding}
-            icon={<PushPinIcon />}
+            // divider={enableHiding}
+            icon={<Icon icon="pin" />}
             key={9}
             label={localization.unpin}
             onClick={() => handlePinColumn(false)}
@@ -278,7 +278,7 @@ export const MRT_ColumnActionMenu = <TData extends MRT_RowData>({
       ? [
           <MRT_ActionMenuItem
             disabled={!columnSizing[column.id]}
-            icon={<RestartAltIcon />}
+            icon={'reset'}
             key={10}
             label={localization.resetColumnSize}
             onClick={handleResetColumnSize}
@@ -290,7 +290,7 @@ export const MRT_ColumnActionMenu = <TData extends MRT_RowData>({
       ? [
           <MRT_ActionMenuItem
             disabled={!column.getCanHide()}
-            icon={<VisibilityOffIcon />}
+            icon={'eye-off'}
             key={11}
             label={localization.hideColumn?.replace(
               '{column}',
@@ -304,7 +304,7 @@ export const MRT_ColumnActionMenu = <TData extends MRT_RowData>({
               !Object.values(columnVisibility).filter((visible) => !visible)
                 .length
             }
-            icon={<ViewColumnIcon />}
+            icon={'eye-on'}
             key={12}
             label={localization.showAllColumns?.replace(
               '{column}',
@@ -318,32 +318,41 @@ export const MRT_ColumnActionMenu = <TData extends MRT_RowData>({
   ].filter(Boolean);
 
   return (
-    <Menu
-      MenuListProps={{
-        dense: density === 'compact',
-        sx: {
-          backgroundColor: menuBackgroundColor,
-        },
-      }}
-      anchorEl={anchorEl}
-      disableScrollLock
-      onClose={() => setAnchorEl(null)}
-      open={!!anchorEl}
+    <Popover
+      lazy
+      onClose={() => setIsOpen(false)}
+      onClosing={() => setIsOpen(false)}
+      placement="bottom-start"
+      isOpen={isOpen}
+      content={
+        <Menu>
+          {columnDef.renderColumnActionsMenuItems?.({
+            closeMenu: () => setIsOpen(false),
+            column,
+            internalColumnMenuItems,
+            table,
+          }) ??
+            renderColumnActionsMenuItems?.({
+              closeMenu: () => setIsOpen(false),
+              column,
+              internalColumnMenuItems,
+              table,
+            }) ??
+            internalColumnMenuItems}
+        </Menu>
+      }
+      // MenuListProps={{
+      //   dense: density === 'compact',
+      //   sx: {
+      //     backgroundColor: menuBackgroundColor,
+      //   },
+      // }}
+      // ulRef={anchorEl}
+      // disableScrollLock
+
       {...rest}
     >
-      {columnDef.renderColumnActionsMenuItems?.({
-        closeMenu: () => setAnchorEl(null),
-        column,
-        internalColumnMenuItems,
-        table,
-      }) ??
-        renderColumnActionsMenuItems?.({
-          closeMenu: () => setAnchorEl(null),
-          column,
-          internalColumnMenuItems,
-          table,
-        }) ??
-        internalColumnMenuItems}
-    </Menu>
+      <Button onClick={onClick} minimal icon="more" />
+    </Popover>
   );
 };

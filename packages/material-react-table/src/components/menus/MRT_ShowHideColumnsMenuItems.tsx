@@ -7,10 +7,7 @@ import {
 } from 'react';
 import Box from '@mui/material/Box';
 import FormControlLabel from '@mui/material/FormControlLabel';
-import MenuItem, { type MenuItemProps } from '@mui/material/MenuItem';
-import Switch from '@mui/material/Switch';
 import Tooltip from '@mui/material/Tooltip';
-import Typography from '@mui/material/Typography';
 import {
   type MRT_Column,
   type MRT_RowData,
@@ -21,9 +18,16 @@ import { getCommonTooltipProps } from '../../utils/style.utils';
 import { parseFromValuesOrFunc } from '../../utils/utils';
 import { MRT_ColumnPinningButtons } from '../buttons/MRT_ColumnPinningButtons';
 import { MRT_GrabHandleButton } from '../buttons/MRT_GrabHandleButton';
+import {
+  Button,
+  ButtonProps,
+  Colors,
+  MenuItemProps,
+  Switch,
+} from '@blueprintjs/core';
 
 export interface MRT_ShowHideColumnsMenuItemsProps<TData extends MRT_RowData>
-  extends MenuItemProps {
+  extends ButtonProps {
   allColumns: MRT_Column<TData>[];
   column: MRT_Column<TData>;
   hoveredColumn: MRT_Column<TData> | null;
@@ -101,19 +105,23 @@ export const MRT_ShowHideColumnsMenuItems = <TData extends MRT_RowData>({
 
   return (
     <>
-      <MenuItem
-        disableRipple
-        onDragEnter={handleDragEnter}
+      <Button
+        minimal
+        fill
+        // onDragEnter={handleDragEnter}
         ref={menuItemRef as any}
         {...rest}
-        sx={(theme) => ({
+        css={(theme) => ({
+          display: 'flex',
+          flexDirection: 'row',
+          width: '100%',
           alignItems: 'center',
           justifyContent: 'flex-start',
           marginTop: 0,
           marginBottom: 0,
           opacity: isDragging ? 0.5 : 1,
           outline: isDragging
-            ? `2px dashed ${theme.palette.grey[500]}`
+            ? `2px dashed ${Colors.GRAY5}`
             : hoveredColumn?.id === column.id
               ? `2px dashed ${draggingBorderColor}`
               : 'none',
@@ -121,11 +129,12 @@ export const MRT_ShowHideColumnsMenuItems = <TData extends MRT_RowData>({
           paddingLeft: `${(column.depth + 0.5) * 2}rem`,
           paddingTop: '6px',
           paddingBottom: '6px',
-          ...(parseFromValuesOrFunc(rest?.sx, theme) as any),
+          ...(parseFromValuesOrFunc(rest?.css, theme) as any),
         })}
       >
         <Box
           sx={{
+            width: 'max-content',
             display: 'flex',
             flexWrap: 'nowrap',
             gap: '8px',
@@ -150,37 +159,34 @@ export const MRT_ShowHideColumnsMenuItems = <TData extends MRT_RowData>({
               <Box sx={{ width: '70px' }} />
             ))}
           {enableHiding ? (
-            <FormControlLabel
-              checked={switchChecked}
-              componentsProps={{
-                typography: {
-                  sx: {
-                    marginBottom: 0,
-                    opacity: columnDefType !== 'display' ? 1 : 0.5,
-                  },
-                },
+            // <Tooltip
+            //   {...getCommonTooltipProps()}
+            //   title={localization.toggleVisibility}
+            // >
+            <div
+              css={{
+                display: 'flex',
+                alignItems: 'center',
+                alignSelf: 'center',
               }}
-              control={
-                <Tooltip
-                  {...getCommonTooltipProps()}
-                  title={localization.toggleVisibility}
-                >
-                  <Switch />
-                </Tooltip>
-              }
-              disabled={!column.getCanHide()}
-              label={columnDef.header}
-              onChange={() => handleToggleColumnHidden(column)}
-            />
+            >
+              <Switch
+                css={{ margin: 0 }}
+                checked={switchChecked}
+                disabled={!column.getCanHide()}
+                labelElement={columnDef.header}
+                onChange={() => handleToggleColumnHidden(column)}
+              />
+            </div>
           ) : (
-            <Typography sx={{ alignSelf: 'center' }}>
-              {columnDef.header}
-            </Typography>
+            // {/* </Tooltip> */}
+            <span css={{ alignSelf: 'center' }}>{columnDef.header}</span>
           )}
         </Box>
-      </MenuItem>
+      </Button>
       {column.columns?.map((c: MRT_Column<TData>, i) => (
         <MRT_ShowHideColumnsMenuItems
+          text={columnDef.header}
           allColumns={allColumns}
           column={c}
           hoveredColumn={hoveredColumn}

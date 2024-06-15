@@ -25,22 +25,12 @@ export const MRT_TableHeadCellColumnActionsButton = <
   ...rest
 }: MRT_TableHeadCellColumnActionsButtonProps<TData>) => {
   const {
-    options: {
-      icons: { MoreVertIcon },
-      localization,
-      muiColumnActionsButtonProps,
-    },
+    options: { localization, muiColumnActionsButtonProps },
   } = table;
   const { column } = header;
   const { columnDef } = column;
 
-  const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
-
-  const handleClick = (event: MouseEvent<HTMLElement>) => {
-    event.stopPropagation();
-    event.preventDefault();
-    setAnchorEl(event.currentTarget);
-  };
+  const [isOpen, setIsOpen] = useState(false);
 
   const iconButtonProps = {
     ...parseFromValuesOrFunc(muiColumnActionsButtonProps, {
@@ -60,39 +50,14 @@ export const MRT_TableHeadCellColumnActionsButton = <
         {...getCommonTooltipProps('top')}
         title={iconButtonProps?.title ?? localization.columnActions}
       >
-        <Button
-          minimal
-          aria-label={localization.columnActions}
-          onClick={handleClick}
-          size="small"
-          {...iconButtonProps}
-          css={(theme: any) => ({
-            '&:hover': {
-              opacity: 1,
-            },
-            height: '2rem',
-            margin: '-8px -4px',
-            opacity: 0.3,
-            transition: 'all 150ms',
-            width: '2rem',
-            ...(parseFromValuesOrFunc(iconButtonProps?.sx, theme) as any),
-          })}
-          title={undefined}
-        >
-          {iconButtonProps?.children ?? (
-            // <MoreVertIcon style={{ transform: 'scale(0.9)' }} />
-            <Icon icon="expand-all" style={{ transform: 'scale(0.9)' }} />
-          )}
-        </Button>
-      </Tooltip>
-      {anchorEl && (
         <MRT_ColumnActionMenu
-          anchorEl={anchorEl}
+          onClick={() => setIsOpen((v) => !v)}
+          isOpen={isOpen}
+          setIsOpen={setIsOpen}
           header={header}
-          setAnchorEl={setAnchorEl}
           table={table}
         />
-      )}
+      </Tooltip>
     </>
   );
 };

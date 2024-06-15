@@ -6,6 +6,7 @@ import { MRT_ToggleDensePaddingButton } from '../buttons/MRT_ToggleDensePaddingB
 import { MRT_ToggleFiltersButton } from '../buttons/MRT_ToggleFiltersButton';
 import { MRT_ToggleFullScreenButton } from '../buttons/MRT_ToggleFullScreenButton';
 import { MRT_ToggleGlobalFilterButton } from '../buttons/MRT_ToggleGlobalFilterButton';
+import { ButtonGroup } from '@blueprintjs/core';
 
 export interface MRT_ToolbarInternalButtonsProps<TData extends MRT_RowData>
   extends BoxProps {
@@ -45,7 +46,7 @@ export const MRT_ToolbarInternalButtons = <TData extends MRT_RowData>({
       {renderToolbarInternalActions?.({
         table,
       }) ?? (
-        <>
+        <ButtonGroup>
           {enableFilters &&
             enableGlobalFilter &&
             !initialState?.showGlobalFilter && (
@@ -65,7 +66,7 @@ export const MRT_ToolbarInternalButtons = <TData extends MRT_RowData>({
           {enableFullScreenToggle && (
             <MRT_ToggleFullScreenButton table={table} />
           )}
-        </>
+        </ButtonGroup>
       )}
     </Box>
   );

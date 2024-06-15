@@ -1,6 +1,5 @@
 import { memo, useMemo } from 'react';
 import { type VirtualItem } from '@tanstack/react-virtual';
-import TableBody, { type TableBodyProps } from '@mui/material/TableBody';
 import Typography from '@mui/material/Typography';
 import { MRT_TableBodyRow, Memo_MRT_TableBodyRow } from './MRT_TableBodyRow';
 import { useMRT_RowVirtualizer } from '../../hooks/useMRT_RowVirtualizer';
@@ -14,7 +13,7 @@ import {
 import { parseFromValuesOrFunc } from '../../utils/utils';
 
 export interface MRT_TableBodyProps<TData extends MRT_RowData>
-  extends TableBodyProps {
+  extends React.ComponentProps<'tbody'> {
   columnVirtualizer?: MRT_ColumnVirtualizer;
   table: MRT_TableInstance<TData>;
 }
@@ -87,7 +86,7 @@ export const MRT_TableBody = <TData extends MRT_RowData>({
               position: 'sticky',
               top: tableHeadHeight - 1,
               zIndex: 1,
-              ...(parseFromValuesOrFunc(tableBodyProps?.sx, theme) as any),
+              ...(parseFromValuesOrFunc(tableBodyProps?.css, theme) as any),
             })}
           >
             {getTopRows().map((row, staticRowIndex) => {
@@ -106,14 +105,14 @@ export const MRT_TableBody = <TData extends MRT_RowData>({
         )}
       <tbody
         {...tableBodyProps}
-        sx={(theme) => ({
+        css={(theme) => ({
           display: layoutMode?.startsWith('grid') ? 'grid' : undefined,
           height: rowVirtualizer
             ? `${rowVirtualizer.getTotalSize()}px`
             : undefined,
           minHeight: !rows.length ? '100px' : undefined,
           position: 'relative',
-          ...(parseFromValuesOrFunc(tableBodyProps?.sx, theme) as any),
+          ...(parseFromValuesOrFunc(tableBodyProps?.css, theme) as any),
         })}
       >
         {tableBodyProps?.children ??
@@ -195,7 +194,7 @@ export const MRT_TableBody = <TData extends MRT_RowData>({
               display: layoutMode?.startsWith('grid') ? 'grid' : undefined,
               position: 'sticky',
               zIndex: 1,
-              ...(parseFromValuesOrFunc(tableBodyProps?.sx, theme) as any),
+              ...(parseFromValuesOrFunc(tableBodyProps?.css, theme) as any),
             })}
           >
             {getBottomRows().map((row, staticRowIndex) => {

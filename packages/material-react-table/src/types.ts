@@ -1,5 +1,5 @@
-import { ButtonProps } from '@blueprintjs/core';
-import {
+import { ButtonProps, DialogProps } from '@blueprintjs/core';
+import React, {
   type Dispatch,
   type MutableRefObject,
   type ReactNode,
@@ -47,7 +47,6 @@ import { type BoxProps } from '@mui/material/Box';
 import { type CheckboxProps } from '@mui/material/Checkbox';
 import { type ChipProps } from '@mui/material/Chip';
 import { type CircularProgressProps } from '@mui/material/CircularProgress';
-import { type DialogProps } from '@mui/material/Dialog';
 import { type IconButtonProps } from '@mui/material/IconButton';
 import { type LinearProgressProps } from '@mui/material/LinearProgress';
 import { type PaginationProps } from '@mui/material/Pagination';
@@ -1090,8 +1089,10 @@ export type MRT_TableOptions<TData extends MRT_RowData> = Omit<
       }) => TableCellProps)
     | TableCellProps;
   muiTableBodyProps?:
-    | ((props: { table: MRT_TableInstance<TData> }) => TableBodyProps)
-    | TableBodyProps;
+    | ((props: {
+        table: MRT_TableInstance<TData>;
+      }) => React.ComponentProps<'tbody'>)
+    | React.ComponentProps<'tbody'>;
   muiTableBodyRowProps?:
     | ((props: {
         isDetailPanel?: boolean;
