@@ -1,4 +1,4 @@
-import { ButtonProps, DialogProps } from '@blueprintjs/core';
+import { ButtonProps, DialogProps, InputGroupProps } from '@blueprintjs/core';
 import React, {
   type Dispatch,
   type MutableRefObject,
@@ -1060,8 +1060,8 @@ export type MRT_TableOptions<TData extends MRT_RowData> = Omit<
       }) => IconButtonProps)
     | IconButtonProps;
   muiSearchTextFieldProps?:
-    | ((props: { table: MRT_TableInstance<TData> }) => TextFieldProps)
-    | TextFieldProps;
+    | ((props: { table: MRT_TableInstance<TData> }) => InputGroupProps)
+    | InputGroupProps;
   muiSelectAllCheckboxProps?:
     | ((props: { table: MRT_TableInstance<TData> }) => CheckboxProps)
     | CheckboxProps;

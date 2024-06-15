@@ -9,15 +9,15 @@ import {
 import Collapse from '@mui/material/Collapse';
 import IconButton from '@mui/material/IconButton';
 import InputAdornment from '@mui/material/InputAdornment';
-import TextField, { type TextFieldProps } from '@mui/material/TextField';
 import Tooltip from '@mui/material/Tooltip';
 import { debounce } from '@mui/material/utils';
 import { type MRT_RowData, type MRT_TableInstance } from '../../types';
 import { parseFromValuesOrFunc } from '../../utils/utils';
 import { MRT_FilterOptionMenu } from '../menus/MRT_FilterOptionMenu';
+import { Button, InputGroup, InputGroupProps } from '@blueprintjs/core';
 
 export interface MRT_GlobalFilterTextFieldProps<TData extends MRT_RowData>
-  extends TextFieldProps<'standard'> {
+  extends InputGroupProps {
   table: MRT_TableInstance<TData>;
 }
 
@@ -29,7 +29,6 @@ export const MRT_GlobalFilterTextField = <TData extends MRT_RowData>({
     getState,
     options: {
       enableGlobalFilterModes,
-      icons: { CloseIcon, SearchIcon },
       localization,
       manualFiltering,
       muiSearchTextFieldProps,
@@ -85,70 +84,31 @@ export const MRT_GlobalFilterTextField = <TData extends MRT_RowData>({
     isMounted.current = true;
   }, [globalFilter]);
 
+  if (!showGlobalFilter) return null;
+
   return (
-    <Collapse
-      in={showGlobalFilter}
-      mountOnEnter
-      orientation="horizontal"
-      unmountOnExit
-    >
-      <TextField
-        inputProps={{
-          autoComplete: 'new-password', // disable autocomplete and autofill
-          ...textFieldProps.inputProps,
-        }}
+    <div>
+      <InputGroup
+        autoComplete="new-password" // disable autocomplete and autofill
         onChange={handleChange}
         placeholder={localization.search}
-        size="small"
         value={searchValue ?? ''}
-        variant="outlined"
+        leftIcon={'search'}
+        rightElement={
+          <Button
+            minimal
+            icon="small-cross"
+            onClick={handleClear}
+            disabled={!searchValue?.length}
+            aria-label={localization.clearSearch}
+            small
+          />
+        }
         {...textFieldProps}
-        InputProps={{
-          endAdornment: (
-            <InputAdornment position="end">
-              <Tooltip title={localization.clearSearch ?? ''}>
-                <span>
-                  <IconButton
-                    aria-label={localization.clearSearch}
-                    disabled={!searchValue?.length}
-                    onClick={handleClear}
-                    size="small"
-                  >
-                    <CloseIcon />
-                  </IconButton>
-                </span>
-              </Tooltip>
-            </InputAdornment>
-          ),
-          startAdornment: enableGlobalFilterModes ? (
-            <InputAdornment position="start">
-              <Tooltip title={localization.changeSearchMode}>
-                <IconButton
-                  aria-label={localization.changeSearchMode}
-                  onClick={handleGlobalFilterMenuOpen}
-                  size="small"
-                  sx={{ height: '1.75rem', width: '1.75rem' }}
-                >
-                  <SearchIcon />
-                </IconButton>
-              </Tooltip>
-            </InputAdornment>
-          ) : (
-            <SearchIcon style={{ marginRight: '4px' }} />
-          ),
-          ...textFieldProps.InputProps,
-          sx: (theme) => ({
-            marginBottom: 0,
-            ...(parseFromValuesOrFunc(
-              textFieldProps?.InputProps?.sx,
-              theme,
-            ) as any),
-          }),
-        }}
         inputRef={(inputRef) => {
           searchInputRef.current = inputRef;
           if (textFieldProps?.inputRef) {
-            textFieldProps.inputRef = inputRef;
+            textFieldProps.inputRef = inputRef as any;
           }
         }}
       />
@@ -158,6 +118,6 @@ export const MRT_GlobalFilterTextField = <TData extends MRT_RowData>({
         setAnchorEl={setAnchorEl}
         table={table}
       />
-    </Collapse>
+    </div>
   );
 };
