@@ -107,6 +107,7 @@
   "peerDependencies": {
     "@blueprintjs/core": "5.10.3",
     "@blueprintjs/icons": "5.9.0",
+    "@blueprintjs/select": "5.1.5",
     "@emotion/react": ">=11.11",
     "@emotion/styled": ">=11.11",
     "@mui/icons-material": ">=5.11",

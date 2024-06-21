@@ -1,29 +1,27 @@
 import Box from '@mui/material/Box';
-import IconButton from '@mui/material/IconButton';
-import InputLabel from '@mui/material/InputLabel';
-import MenuItem from '@mui/material/MenuItem';
-import Pagination, { type PaginationProps } from '@mui/material/Pagination';
-import PaginationItem from '@mui/material/PaginationItem';
-import Select, { type SelectProps } from '@mui/material/Select';
 import Tooltip from '@mui/material/Tooltip';
-import Typography from '@mui/material/Typography';
-import { useTheme } from '@mui/material/styles';
-import useMediaQuery from '@mui/material/useMediaQuery';
 import { type MRT_RowData, type MRT_TableInstance } from '../../types';
-import { flipIconStyles, getCommonTooltipProps } from '../../utils/style.utils';
+import { getCommonTooltipProps } from '../../utils/style.utils';
 import { parseFromValuesOrFunc } from '../../utils/utils';
+import { Select, SelectProps } from '@blueprintjs/select';
+import { Button, ButtonGroup, MenuItem } from '@blueprintjs/core';
 
 const defaultRowsPerPage = [5, 10, 15, 20, 25, 30, 50, 100];
 
-export interface MRT_TablePaginationProps<TData extends MRT_RowData>
-  extends Partial<
-    PaginationProps & {
-      SelectProps?: Partial<SelectProps>;
-      disabled?: boolean;
-      rowsPerPageOptions?: { label: string; value: number }[] | number[];
-      showRowsPerPage?: boolean;
+type ItemType =
+  | {
+      label: string;
+      value: number;
     }
-  > {
+  | number;
+
+export interface MRT_TablePaginationProps<TData extends MRT_RowData>
+  extends Partial<{
+    SelectProps?: Partial<SelectProps<ItemType>>;
+    disabled?: boolean;
+    rowsPerPageOptions?: { label: string; value: number }[] | number[];
+    showRowsPerPage?: boolean;
+  }> {
   position?: 'bottom' | 'top';
   table: MRT_TableInstance<TData>;
 }
@@ -33,14 +31,10 @@ export const MRT_TablePagination = <TData extends MRT_RowData>({
   table,
   ...rest
 }: MRT_TablePaginationProps<TData>) => {
-  const theme = useTheme();
-  const isMobile = useMediaQuery('(max-width: 720px)');
-
   const {
     getState,
     options: {
       enableToolbarInternalActions,
-      icons: { ChevronLeftIcon, ChevronRightIcon, FirstPageIcon, LastPageIcon },
       localization,
       muiPaginationProps,
       paginationDisplayMode,
@@ -71,15 +65,15 @@ export const MRT_TablePagination = <TData extends MRT_RowData>({
     showFirstButton = showFirstLastPageButtons,
     showLastButton = showFirstLastPageButtons,
     showRowsPerPage = true,
-    ...restPaginationProps
+    // ...restPaginationProps
   } = paginationProps ?? {};
 
   const disableBack = pageIndex <= 0 || disabled;
   const disableNext = lastRowIndex >= totalRowCount || disabled;
 
-  if (isMobile && SelectProps?.native !== false) {
-    SelectProps.native = true;
-  }
+  // if (isMobile && SelectProps?.native !== false) {
+  //   SelectProps.native = true;
+  // }
 
   const tooltipProps = getCommonTooltipProps();
 
@@ -109,132 +103,133 @@ export const MRT_TablePagination = <TData extends MRT_RowData>({
     >
       {showRowsPerPage && (
         <Box sx={{ alignItems: 'center', display: 'flex', gap: '8px' }}>
-          <InputLabel htmlFor="mrt-rows-per-page" sx={{ mb: 0 }}>
-            {localization.rowsPerPage}
-          </InputLabel>
-          <Select
-            MenuProps={{ disableScrollLock: true }}
-            disableUnderline
+          {localization.rowsPerPage}
+          <Select<ItemType>
+            items={rowsPerPageOptions}
             disabled={disabled}
-            inputProps={{
-              'aria-label': localization.rowsPerPage,
-              id: 'mrt-rows-per-page',
-            }}
-            label={localization.rowsPerPage}
-            onChange={(event) =>
-              table.setPageSize(+(event.target.value as any))
+            aria-label={localization.rowsPerPage}
+            onItemSelect={(item) =>
+              table.setPageSize(typeof item === 'number' ? item : item.value)
             }
-            sx={{ mb: 0 }}
-            value={pageSize}
-            variant="standard"
-            {...SelectProps}
-          >
-            {rowsPerPageOptions.map((option) => {
-              const value = typeof option !== 'number' ? option.value : option;
-              const label =
-                typeof option !== 'number' ? option.label : `${option}`;
+            itemPredicate={(query, item, _index, exactMatch) => {
+              if (exactMatch) {
+                if (typeof item === 'number') {
+                  return item === parseInt(query, 10);
+                } else {
+                  return item.value === parseInt(query, 10);
+                }
+              } else {
+                if (typeof item === 'number') {
+                  return item.toString().includes(query);
+                } else {
+                  return item.label.includes(query);
+                }
+              }
+            }}
+            filterable={false}
+            itemRenderer={(item, { handleClick, handleFocus, modifiers }) => {
+              if (!modifiers.matchesPredicate) {
+                return null;
+              }
+
               return (
-                SelectProps?.children ??
-                (SelectProps?.native ? (
-                  <option key={value} value={value}>
-                    {label}
-                  </option>
-                ) : (
-                  <MenuItem key={value} sx={{ m: 0 }} value={value}>
-                    {label}
-                  </MenuItem>
-                ))
+                <MenuItem
+                  active={modifiers.active}
+                  disabled={modifiers.disabled}
+                  key={typeof item === 'number' ? item : item.value}
+                  onClick={handleClick}
+                  onFocus={handleFocus}
+                  roleStructure="listoption"
+                  text={typeof item === 'number' ? item : item.value}
+                />
               );
-            })}
+            }}
+            menuProps={{ style: { minWidth: 'unset' } }}
+            {...(SelectProps as any)}
+          >
+            <Button minimal rightIcon="chevron-down">
+              {pageSize}
+            </Button>
           </Select>
         </Box>
       )}
       {paginationDisplayMode === 'pages' ? (
-        <Pagination
-          count={numberOfPages}
-          disabled={disabled}
-          onChange={(_e, newPageIndex) => table.setPageIndex(newPageIndex - 1)}
-          page={pageIndex + 1}
-          renderItem={(item) => (
-            <PaginationItem
-              slots={{
-                first: FirstPageIcon,
-                last: LastPageIcon,
-                next: ChevronRightIcon,
-                previous: ChevronLeftIcon,
-              }}
-              {...item}
-            />
-          )}
-          showFirstButton={showFirstButton}
-          showLastButton={showLastButton}
-          {...restPaginationProps}
-        />
-      ) : paginationDisplayMode === 'default' ? (
+        <div>No pagination yet</div>
+      ) : // <Pagination
+      //   count={numberOfPages}
+      //   disabled={disabled}
+      //   onChange={(_e, newPageIndex) => table.setPageIndex(newPageIndex - 1)}
+      //   page={pageIndex + 1}
+      //   renderItem={(item) => (
+      //     <PaginationItem
+      //       slots={{
+      //         first: FirstPageIcon,
+      //         last: LastPageIcon,
+      //         next: ChevronRightIcon,
+      //         previous: ChevronLeftIcon,
+      //       }}
+      //       {...item}
+      //     />
+      //   )}
+      //   showFirstButton={showFirstButton}
+      //   showLastButton={showLastButton}
+      //   {...restPaginationProps}
+      // />
+      paginationDisplayMode === 'default' ? (
         <>
-          <Typography
-            align="center"
-            component="span"
-            sx={{ m: '0 4px', minWidth: '8ch' }}
-            variant="body2"
+          <span
+          // align="center"
+          // component="span"
+          // sx={{ m: '0 4px', minWidth: '8ch' }}
+          // variant="body2"
           >{`${
             lastRowIndex === 0 ? 0 : (firstRowIndex + 1).toLocaleString()
           }-${lastRowIndex.toLocaleString()} ${
             localization.of
-          } ${totalRowCount.toLocaleString()}`}</Typography>
+          } ${totalRowCount.toLocaleString()}`}</span>
           <Box gap="xs">
-            {showFirstButton && (
-              <Tooltip {...tooltipProps} title={localization.goToFirstPage}>
-                <span>
-                  <IconButton
+            <ButtonGroup>
+              {showFirstButton && (
+                <Tooltip {...tooltipProps} title={localization.goToFirstPage}>
+                  <Button
+                    minimal
                     aria-label={localization.goToFirstPage}
                     disabled={disableBack}
                     onClick={() => table.firstPage()}
-                    size="small"
-                  >
-                    <FirstPageIcon {...flipIconStyles(theme)} />
-                  </IconButton>
-                </span>
-              </Tooltip>
-            )}
-            <Tooltip {...tooltipProps} title={localization.goToPreviousPage}>
-              <span>
-                <IconButton
+                    icon="double-chevron-left"
+                  />
+                </Tooltip>
+              )}
+              <Tooltip {...tooltipProps} title={localization.goToPreviousPage}>
+                <Button
+                  minimal
                   aria-label={localization.goToPreviousPage}
                   disabled={disableBack}
                   onClick={() => table.previousPage()}
-                  size="small"
-                >
-                  <ChevronLeftIcon {...flipIconStyles(theme)} />
-                </IconButton>
-              </span>
-            </Tooltip>
-            <Tooltip {...tooltipProps} title={localization.goToNextPage}>
-              <span>
-                <IconButton
+                  icon="chevron-left"
+                />
+              </Tooltip>
+              <Tooltip {...tooltipProps} title={localization.goToNextPage}>
+                <Button
+                  minimal
                   aria-label={localization.goToNextPage}
                   disabled={disableNext}
                   onClick={() => table.nextPage()}
-                  size="small"
-                >
-                  <ChevronRightIcon {...flipIconStyles(theme)} />
-                </IconButton>
-              </span>
-            </Tooltip>
-            {showLastButton && (
-              <Tooltip {...tooltipProps} title={localization.goToLastPage}>
-                <span>
-                  <IconButton
+                  icon="chevron-right"
+                />
+              </Tooltip>
+              {showLastButton && (
+                <Tooltip {...tooltipProps} title={localization.goToLastPage}>
+                  <Button
+                    minimal
                     aria-label={localization.goToLastPage}
                     disabled={disableNext}
                     onClick={() => table.lastPage()}
-                    size="small"
-                  >
-                    <LastPageIcon {...flipIconStyles(theme)} />
-                  </IconButton>
-                </span>
-              </Tooltip>
-            )}
+                    icon="double-chevron-right"
+                  />
+                </Tooltip>
+              )}
+            </ButtonGroup>
           </Box>
         </>
       ) : null}

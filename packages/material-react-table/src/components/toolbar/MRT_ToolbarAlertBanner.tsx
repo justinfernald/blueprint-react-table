@@ -10,6 +10,7 @@ import { type MRT_RowData, type MRT_TableInstance } from '../../types';
 import { getMRT_SelectAllHandler } from '../../utils/row.utils';
 import { parseFromValuesOrFunc } from '../../utils/utils';
 import { MRT_SelectCheckbox } from '../inputs/MRT_SelectCheckbox';
+import { Tag } from '@blueprintjs/core';
 
 export interface MRT_ToolbarAlertBannerProps<TData extends MRT_RowData>
   extends AlertProps {
@@ -86,11 +87,14 @@ export const MRT_ToolbarAlertBanner = <TData extends MRT_RowData>({
         {grouping.map((columnId, index) => (
           <Fragment key={`${index}-${columnId}`}>
             {index > 0 ? localization.thenBy : ''}
-            <Chip
-              label={table.getColumn(columnId).columnDef.header}
-              onDelete={() => table.getColumn(columnId).toggleGrouping()}
+            <Tag
+              minimal
+              large
+              onRemove={() => table.getColumn(columnId).toggleGrouping()}
               {...chipProps}
-            />
+            >
+              {table.getColumn(columnId).columnDef.header}
+            </Tag>
           </Fragment>
         ))}
       </span>

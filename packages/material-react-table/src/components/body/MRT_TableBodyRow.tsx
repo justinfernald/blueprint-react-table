@@ -146,20 +146,9 @@ export const MRT_TableBodyRow = <TData extends MRT_RowData>({
 
   const rowRef = useRef<HTMLTableRowElement | null>(null);
 
-  const cellHighlightColor = isRowSelected
-    ? selectedRowBackgroundColor
-    : isRowPinned
-      ? pinnedRowBackgroundColor
-      : undefined;
+  const cellHighlightColor = isRowPinned ? pinnedRowBackgroundColor : undefined;
 
-  const cellHighlightColorHover =
-    tableRowProps?.hover !== false
-      ? isRowSelected
-        ? cellHighlightColor
-        : theme.palette.mode === 'dark'
-          ? `${lighten(baseBackgroundColor, 0.3)}`
-          : `${darken(baseBackgroundColor, 0.3)}`
-      : undefined;
+  const cellHighlightColorHover = undefined;
 
   return (
     <>

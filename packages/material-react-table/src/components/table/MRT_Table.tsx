@@ -62,10 +62,12 @@ export const MRT_Table = <TData extends MRT_RowData>({
 
   return (
     <HTMLTable
+      interactive
       // stickyHeader={enableStickyHeader || isFullScreen}
       {...tableProps}
       style={{ ...columnSizeVars, ...tableProps?.style }}
       css={(theme) => ({
+        width: '100%',
         borderCollapse: 'separate',
         display: layoutMode?.startsWith('grid') ? 'grid' : undefined,
         position: 'relative',

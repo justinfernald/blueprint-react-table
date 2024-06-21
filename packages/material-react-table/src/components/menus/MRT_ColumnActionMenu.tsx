@@ -235,7 +235,7 @@ export const MRT_ColumnActionMenu = <TData extends MRT_RowData>({
       ? [
           <MRT_ActionMenuItem
             // divider={enableColumnPinning}
-            icon={'feed'}
+            icon={'group-objects'}
             key={6}
             label={localization[
               column.getIsGrouped() ? 'ungroupByColumn' : 'groupByColumn'

@@ -1,5 +1,5 @@
 import Box from '@mui/material/Box';
-import Divider, { type DividerProps } from '@mui/material/Divider';
+import { Divider, DividerProps } from '@blueprintjs/core';
 import {
   type MRT_Header,
   type MRT_RowData,
@@ -76,9 +76,7 @@ export const MRT_TableHeadCellResizeHandle = <TData extends MRT_RowData>({
     >
       <Divider
         className="Mui-TableHeadCell-ResizeHandle-Divider"
-        flexItem
-        orientation="vertical"
-        sx={(theme) => ({
+        css={(theme) => ({
           borderRadius: '2px',
           borderWidth: '2px',
           height: '24px',
@@ -89,7 +87,7 @@ export const MRT_TableHeadCellResizeHandle = <TData extends MRT_RowData>({
             : 'all 150ms ease-in-out',
           userSelect: 'none',
           zIndex: 4,
-          ...(parseFromValuesOrFunc(rest?.sx, theme) as any),
+          // ...(parseFromValuesOrFunc(rest?.css, theme) as any),
         })}
       />
     </Box>

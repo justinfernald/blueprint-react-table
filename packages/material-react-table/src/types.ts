@@ -1,4 +1,9 @@
-import { ButtonProps, DialogProps, InputGroupProps } from '@blueprintjs/core';
+import {
+  ButtonProps,
+  DialogProps,
+  InputGroupProps,
+  TagProps,
+} from '@blueprintjs/core';
 import React, {
   type Dispatch,
   type MutableRefObject,
@@ -1141,8 +1146,8 @@ export type MRT_TableOptions<TData extends MRT_RowData> = Omit<
     | ((props: { table: MRT_TableInstance<TData> }) => TableProps)
     | TableProps;
   muiToolbarAlertBannerChipProps?:
-    | ((props: { table: MRT_TableInstance<TData> }) => ChipProps)
-    | ChipProps;
+    | ((props: { table: MRT_TableInstance<TData> }) => TagProps)
+    | TagProps;
   muiToolbarAlertBannerProps?:
     | ((props: { table: MRT_TableInstance<TData> }) => AlertProps)
     | AlertProps;
