@@ -107,6 +107,7 @@ export const MRT_ShowHideColumnsMenu = <TData extends MRT_RowData>({
       >
         {enableHiding && (
           <Button
+            css={{ textWrapMode: 'nowrap' }}
             disabled={!getIsSomeColumnsVisible()}
             onClick={() => handleToggleAllColumns(false)}
           >
@@ -115,6 +116,7 @@ export const MRT_ShowHideColumnsMenu = <TData extends MRT_RowData>({
         )}
         {enableColumnOrdering && (
           <Button
+            css={{ textWrapMode: 'nowrap' }}
             onClick={() =>
               table.setColumnOrder(
                 getDefaultColumnOrderIds(table.options, true),
@@ -126,6 +128,7 @@ export const MRT_ShowHideColumnsMenu = <TData extends MRT_RowData>({
         )}
         {enableColumnPinning && (
           <Button
+            css={{ textWrapMode: 'nowrap' }}
             disabled={!getIsSomeColumnsPinned()}
             onClick={() => table.resetColumnPinning(true)}
           >
@@ -134,6 +137,7 @@ export const MRT_ShowHideColumnsMenu = <TData extends MRT_RowData>({
         )}
         {enableHiding && (
           <Button
+            css={{ textWrapMode: 'nowrap' }}
             disabled={getIsAllColumnsVisible()}
             onClick={() => handleToggleAllColumns(true)}
           >
