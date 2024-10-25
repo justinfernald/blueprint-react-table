@@ -7,9 +7,6 @@ import {
   useMemo,
   useState,
 } from 'react';
-import Skeleton from '@mui/material/Skeleton';
-import TableCell, { type TableCellProps } from '@mui/material/TableCell';
-import { useTheme } from '@mui/material/styles';
 import { MRT_TableBodyCellValue } from './MRT_TableBodyCellValue';
 import {
   type MRT_Cell,
@@ -22,9 +19,10 @@ import { parseFromValuesOrFunc } from '../../utils/utils';
 import { MRT_CopyButton } from '../buttons/MRT_CopyButton';
 import { MRT_EditCellTextField } from '../inputs/MRT_EditCellTextField';
 import { Colors } from '@blueprintjs/core';
+import { useTheme } from '@emotion/react';
+import { Skeleton } from '../primitives/Skeleton';
 
-export interface MRT_TableBodyCellProps<TData extends MRT_RowData>
-  extends TableCellProps {
+export interface MRT_TableBodyCellProps<TData extends MRT_RowData> {
   cell: MRT_Cell<TData>;
   numRows?: number;
   rowRef: RefObject<HTMLTableRowElement>;
@@ -288,12 +286,7 @@ export const MRT_TableBodyCell = <TData extends MRT_RowData>({
           {cell.getIsPlaceholder() ? (
             columnDef.PlaceholderCell?.({ cell, column, row, table }) ?? null
           ) : showSkeletons !== false && (isLoading || showSkeletons) ? (
-            <Skeleton
-              animation="wave"
-              height={20}
-              width={skeletonWidth}
-              {...skeletonProps}
-            />
+            <Skeleton height={20} width={skeletonWidth} {...skeletonProps} />
           ) : columnDefType === 'display' &&
             (['mrt-row-expand', 'mrt-row-numbers', 'mrt-row-select'].includes(
               column.id,

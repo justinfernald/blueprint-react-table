@@ -1,6 +1,5 @@
-import Tooltip from '@mui/material/Tooltip';
 import { type MRT_RowData, type MRT_TableInstance } from '../../types';
-import { Button, ButtonProps } from '@blueprintjs/core';
+import { Button, ButtonProps, Tooltip } from '@blueprintjs/core';
 
 export interface MRT_ToggleGlobalFilterButtonProps<TData extends MRT_RowData>
   extends ButtonProps {
@@ -25,7 +24,7 @@ export const MRT_ToggleGlobalFilterButton = <TData extends MRT_RowData>({
   };
 
   return (
-    <Tooltip title={rest?.title ?? localization.showHideSearch}>
+    <Tooltip content={rest?.title ?? localization.showHideSearch}>
       <Button
         minimal
         icon={showGlobalFilter ? 'disable' : 'search'}

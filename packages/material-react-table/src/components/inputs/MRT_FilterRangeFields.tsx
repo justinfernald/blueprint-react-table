@@ -1,4 +1,3 @@
-import Box, { type BoxProps } from '@mui/material/Box';
 import { MRT_FilterTextField } from './MRT_FilterTextField';
 import {
   type MRT_Header,
@@ -6,6 +5,7 @@ import {
   type MRT_TableInstance,
 } from '../../types';
 import { parseFromValuesOrFunc } from '../../utils/utils';
+import { Box } from '../primitives/Box';
 
 export interface MRT_FilterRangeFieldsProps<TData extends MRT_RowData>
   extends BoxProps {
@@ -21,11 +21,10 @@ export const MRT_FilterRangeFields = <TData extends MRT_RowData>({
   return (
     <Box
       {...rest}
-      sx={(theme) => ({
+      css={(theme) => ({
         display: 'grid',
         gap: '1rem',
         gridTemplateColumns: '1fr 1fr',
-        ...(parseFromValuesOrFunc(rest?.sx, theme) as any),
       })}
     >
       {[0, 1].map((rangeFilterIndex) => (

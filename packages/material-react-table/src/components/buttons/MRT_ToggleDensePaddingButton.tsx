@@ -1,6 +1,5 @@
-import Tooltip from '@mui/material/Tooltip';
 import { type MRT_RowData, type MRT_TableInstance } from '../../types';
-import { Button, ButtonProps, Icon } from '@blueprintjs/core';
+import { Button, ButtonProps, Icon, Tooltip } from '@blueprintjs/core';
 
 export interface MRT_ToggleDensePaddingButtonProps<TData extends MRT_RowData>
   extends ButtonProps {
@@ -29,7 +28,7 @@ export const MRT_ToggleDensePaddingButton = <TData extends MRT_RowData>({
   };
 
   return (
-    <Tooltip title={rest?.title ?? localization.toggleDensity}>
+    <Tooltip content={rest?.title ?? localization.toggleDensity}>
       <Button
         minimal
         aria-label={localization.toggleDensity}

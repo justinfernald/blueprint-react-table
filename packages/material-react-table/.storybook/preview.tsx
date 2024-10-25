@@ -1,27 +1,79 @@
 import '@blueprintjs/core/lib/css/blueprint.css';
 import '@blueprintjs/icons/lib/css/blueprint-icons.css';
+import '@blueprintjs/datetime/lib/css/blueprint-datetime.css';
+import '@blueprintjs/datetime/lib/css/blueprint-datetime.css';
 
 import React, { useEffect, useState } from 'react';
 import { Classes } from '@blueprintjs/core';
 import { addons } from '@storybook/preview-api';
 import { Preview } from '@storybook/react';
-import { useDarkMode, DARK_MODE_EVENT_NAME } from 'storybook-dark-mode';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
-import Typography from '@mui/material/Typography';
-import Link from '@mui/material/Link';
-import { LocalizationProvider } from '@mui/x-date-pickers';
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import { CssBaseline } from '@mui/material';
+import { DARK_MODE_EVENT_NAME } from 'storybook-dark-mode';
+
+import { ThemeProvider } from '@emotion/react';
+import { CustomTheme } from '../src/theme';
 
 const channel = addons.getChannel();
 
-const lightTheme = createTheme({
-  palette: { mode: 'light' },
-});
+const commonTheme = {
+  direction: 'ltr' as const,
+  zIndex: {
+    modal: 1300,
+  },
+  palette: {
+    common: {
+      black: '#000',
+      white: '#fff',
+    },
+    grey: {
+      50: '#fafafa',
+      100: '#f5f5f5',
+      200: '#eeeeee',
+      300: '#e0e0e0',
+      400: '#bdbdbd',
+      500: '#9e9e9e',
+      600: '#757575',
+      700: '#616161',
+      800: '#424242',
+      900: '#212121',
+    },
+  },
+};
 
-const darkTheme = createTheme({
-  palette: { mode: 'dark' },
-});
+const lightTheme: CustomTheme = {
+  ...commonTheme,
+  palette: {
+    ...commonTheme.palette,
+    info: {
+      main: '#1976d2',
+    },
+    mode: 'light',
+    background: { default: '#f5f5f5' },
+  },
+};
+
+const darkTheme: CustomTheme = {
+  ...commonTheme,
+  palette: {
+    ...commonTheme.palette,
+    info: {
+      main: '#90caf9',
+    },
+    mode: 'dark',
+    background: { default: '#30404d' },
+    grey: {
+      50: '#f5f5f5',
+      100: '#eeeeee',
+      200: '#e0e0e0',
+      300: '#bdbdbd',
+      400: '#9e9e9e',
+      500: '#757575',
+      600: '#616161',
+      700: '#424242',
+      800: '#212121',
+      900: '#212121',
+    },
+  },
+};
 
 const preview: Preview = {
   parameters: {
@@ -64,31 +116,9 @@ const preview: Preview = {
 
       return (
         <ThemeProvider theme={theme}>
-          <CssBaseline />
-          <LocalizationProvider dateAdapter={AdapterDayjs}>
-            <div className={isDark ? Classes.DARK : undefined}>
-              <p className={Classes.TEXT_SMALL}>
-                Looking for the main docs site? Click{' '}
-                <Link
-                  href="https://www.material-react-table.com"
-                  target="_blank"
-                  rel="noopener"
-                >
-                  here.
-                </Link>
-              </p>
-              <p className={Classes.TEXT_SMALL}>
-                View Source code for these examples in the code tab below or{' '}
-                <Link
-                  href="https://github.com/KevinVandy/material-react-table/tree/v2/packages/material-react-table/stories/features"
-                  target="_blank"
-                >
-                  here on GitHub.
-                </Link>
-              </p>
-              <Story {...context} />
-            </div>
-          </LocalizationProvider>
+          <div className={isDark ? Classes.DARK : undefined}>
+            <Story {...context} />
+          </div>
         </ThemeProvider>
       );
     },

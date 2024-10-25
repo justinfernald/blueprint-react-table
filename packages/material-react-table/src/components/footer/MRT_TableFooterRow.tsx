@@ -1,4 +1,3 @@
-import TableRow, { type TableRowProps } from '@mui/material/TableRow';
 import { MRT_TableFooterCell } from './MRT_TableFooterCell';
 import {
   type MRT_ColumnVirtualizer,
@@ -10,8 +9,7 @@ import {
 } from '../../types';
 import { parseFromValuesOrFunc } from '../../utils/utils';
 
-export interface MRT_TableFooterRowProps<TData extends MRT_RowData>
-  extends TableRowProps {
+export interface MRT_TableFooterRowProps<TData extends MRT_RowData> {
   columnVirtualizer?: MRT_ColumnVirtualizer;
   footerGroup: MRT_HeaderGroup<TData>;
   table: MRT_TableInstance<TData>;
@@ -55,9 +53,9 @@ export const MRT_TableFooterRow = <TData extends MRT_RowData>({
   };
 
   return (
-    <TableRow
+    <tr
       {...tableRowProps}
-      sx={(theme) => ({
+      css={(theme) => ({
         backgroundColor: baseBackgroundColor,
         display: layoutMode?.startsWith('grid') ? 'flex' : undefined,
         position: 'relative',
@@ -90,6 +88,6 @@ export const MRT_TableFooterRow = <TData extends MRT_RowData>({
       {virtualPaddingRight ? (
         <th style={{ display: 'flex', width: virtualPaddingRight }} />
       ) : null}
-    </TableRow>
+    </tr>
   );
 };

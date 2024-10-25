@@ -1,9 +1,5 @@
 import { type MouseEvent, useState } from 'react';
-import Box from '@mui/material/Box';
-import Grow from '@mui/material/Grow';
-import IconButton, { type IconButtonProps } from '@mui/material/IconButton';
-import Popover from '@mui/material/Popover';
-import Tooltip from '@mui/material/Tooltip';
+
 import { MRT_TableHeadCellFilterContainer } from './MRT_TableHeadCellFilterContainer';
 import {
   type MRT_Header,
@@ -15,9 +11,10 @@ import {
   useDropdownOptions,
 } from '../../utils/column.utils';
 import { getValueAndLabel, parseFromValuesOrFunc } from '../../utils/utils';
+import { Button, Popover, Tooltip } from '@blueprintjs/core';
+import { Box } from '../primitives/Box';
 
-export interface MRT_TableHeadCellFilterLabelProps<TData extends MRT_RowData>
-  extends IconButtonProps {
+export interface MRT_TableHeadCellFilterLabelProps<TData extends MRT_RowData> {
   header: MRT_Header<TData>;
   table: MRT_TableInstance<TData>;
 }
@@ -105,7 +102,7 @@ export const MRT_TableHeadCellFilterLabel = <TData extends MRT_RowData = {}>({
 
   return (
     <>
-      <Grow
+      {/* <Grow
         in={
           columnFilterDisplayMode === 'popover' ||
           (!!filterValue && !isRangeFilter) ||
@@ -113,64 +110,61 @@ export const MRT_TableHeadCellFilterLabel = <TData extends MRT_RowData = {}>({
             (!!filterValue?.[0] || !!filterValue?.[1]))
         }
         unmountOnExit
-      >
-        <Box component="span" sx={{ flex: '0 0' }}>
-          <Tooltip placement="top" title={filterTooltip}>
-            <IconButton
-              disableRipple
-              onClick={(event: MouseEvent<HTMLButtonElement>) => {
-                if (columnFilterDisplayMode === 'popover') {
-                  setAnchorEl(event.currentTarget);
-                } else {
-                  setShowColumnFilters(true);
-                }
-                queueMicrotask(() => {
-                  filterInputRefs.current[`${column.id}-0`]?.focus?.();
-                  filterInputRefs.current[`${column.id}-0`]?.select?.();
-                });
-                event.stopPropagation();
-              }}
-              size="small"
-              {...rest}
-              sx={(theme) => ({
-                height: '16px',
-                marginLeft: '4px',
-                opacity: isFilterActive ? 1 : 0.3,
-                padding: '8px',
-                transform: 'scale(0.75)',
-                transition: 'all 150ms ease-in-out',
-                width: '16px',
-                ...(parseFromValuesOrFunc(rest?.sx, theme) as any),
-              })}
-            >
-              <FilterAltIcon />
-            </IconButton>
-          </Tooltip>
-        </Box>
-      </Grow>
+      > */}
+      <Box component="span" css={{ flex: '0 0' }}>
+        <Tooltip position="top" content={filterTooltip}>
+          <Button
+            icon="filter"
+            onClick={(event: any) => {
+              if (columnFilterDisplayMode === 'popover') {
+                setAnchorEl(event.currentTarget);
+              } else {
+                setShowColumnFilters(true);
+              }
+              queueMicrotask(() => {
+                filterInputRefs.current[`${column.id}-0`]?.focus?.();
+                filterInputRefs.current[`${column.id}-0`]?.select?.();
+              });
+              event.stopPropagation();
+            }}
+            small
+            {...rest}
+            css={(theme) => ({
+              height: '16px',
+              marginLeft: '4px',
+              opacity: isFilterActive ? 1 : 0.3,
+              padding: '8px',
+              transform: 'scale(0.75)',
+              transition: 'all 150ms ease-in-out',
+              width: '16px',
+            })}
+          />
+        </Tooltip>
+      </Box>
+      {/* </Grow> */}
       {columnFilterDisplayMode === 'popover' && (
         <Popover
-          anchorEl={anchorEl}
-          anchorOrigin={{
-            horizontal: 'center',
-            vertical: 'top',
-          }}
-          disableScrollLock
-          onClick={(event) => event.stopPropagation()}
+          // anchorEl={anchorEl}
+          // anchorOrigin={{
+          //   horizontal: 'center',
+          //   vertical: 'top',
+          // }}
+          // disableScrollLock
+          // onClick={(event) => event.stopPropagation()}
           onClose={(event) => {
             //@ts-ignore
             event.stopPropagation();
             setAnchorEl(null);
           }}
-          onKeyDown={(event) => event.key === 'Enter' && setAnchorEl(null)}
-          open={!!anchorEl}
-          slotProps={{ paper: { sx: { overflow: 'visible' } } }}
-          transformOrigin={{
-            horizontal: 'center',
-            vertical: 'bottom',
-          }}
+          // onKeyDown={(event) => event.key === 'Enter' && setAnchorEl(null)}
+          // open={!!anchorEl}
+          // slotProps={{ paper: { sx: { overflow: 'visible' } } }}
+          // transformOrigin={{
+          //   horizontal: 'center',
+          //   vertical: 'bottom',
+          // }}
         >
-          <Box sx={{ p: '1rem' }}>
+          <Box css={{ p: '1rem' }}>
             <MRT_TableHeadCellFilterContainer header={header} table={table} />
           </Box>
         </Popover>

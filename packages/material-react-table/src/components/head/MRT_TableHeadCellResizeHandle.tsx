@@ -1,4 +1,3 @@
-import Box from '@mui/material/Box';
 import { Divider, DividerProps } from '@blueprintjs/core';
 import {
   type MRT_Header,
@@ -6,6 +5,7 @@ import {
   type MRT_TableInstance,
 } from '../../types';
 import { parseFromValuesOrFunc } from '../../utils/utils';
+import { Box } from '../primitives/Box';
 
 export interface MRT_TableHeadCellResizeHandleProps<TData extends MRT_RowData>
   extends DividerProps {
@@ -58,7 +58,7 @@ export const MRT_TableHeadCellResizeHandle = <TData extends MRT_RowData>({
               }px)`
             : undefined,
       }}
-      sx={(theme) => ({
+      css={(theme) => ({
         '&:active > hr': {
           backgroundColor: theme.palette.info.main,
           opacity:

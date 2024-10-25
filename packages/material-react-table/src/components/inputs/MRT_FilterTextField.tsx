@@ -12,9 +12,7 @@ import Checkbox from '@mui/material/Checkbox';
 import Chip from '@mui/material/Chip';
 import IconButton from '@mui/material/IconButton';
 import InputAdornment from '@mui/material/InputAdornment';
-import MenuItem from '@mui/material/MenuItem';
 import TextField, { type TextFieldProps } from '@mui/material/TextField';
-import Tooltip from '@mui/material/Tooltip';
 import { debounce } from '@mui/material/utils';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
@@ -31,6 +29,8 @@ import {
 } from '../../utils/column.utils';
 import { getValueAndLabel, parseFromValuesOrFunc } from '../../utils/utils';
 import { MRT_FilterOptionMenu } from '../menus/MRT_FilterOptionMenu';
+import { Button, InputGroup, MenuItem, Tag, Tooltip } from '@blueprintjs/core';
+import { DateInput3, DatePicker3 } from '@blueprintjs/datetime2';
 
 export interface MRT_FilterTextFieldProps<TData extends MRT_RowData>
   extends TextFieldProps<'standard'> {
@@ -241,48 +241,42 @@ export const MRT_FilterTextField = <TData extends MRT_RowData>({
 
   const endAdornment =
     !isAutocompleteFilter && !isDateFilter && !filterChipLabel ? (
-      <InputAdornment
-        position="end"
-        sx={{ mr: isSelectFilter || isMultiSelectFilter ? '20px' : undefined }}
-      >
-        <Tooltip placement="right" title={localization.clearFilter ?? ''}>
-          <span>
-            <IconButton
-              aria-label={localization.clearFilter}
-              disabled={!filterValue?.toString()?.length}
-              onClick={handleClear}
-              size="small"
-              sx={{
-                height: '2rem',
-                transform: 'scale(0.9)',
-                width: '2rem',
-              }}
-            >
-              <CloseIcon />
-            </IconButton>
-          </span>
-        </Tooltip>
-      </InputAdornment>
-    ) : null;
-
-  const startAdornment = showChangeModeButton ? (
-    <InputAdornment position="start">
-      <Tooltip title={localization.changeFilterMode}>
+      <Tooltip placement="right" content={localization.clearFilter ?? ''}>
         <span>
           <IconButton
-            aria-label={localization.changeFilterMode}
-            onClick={handleFilterMenuOpen}
+            aria-label={localization.clearFilter}
+            disabled={!filterValue?.toString()?.length}
+            onClick={handleClear}
             size="small"
-            sx={{ height: '1.75rem', width: '1.75rem' }}
+            sx={{
+              height: '2rem',
+              transform: 'scale(0.9)',
+              width: '2rem',
+            }}
           >
-            <FilterListIcon />
+            <CloseIcon />
           </IconButton>
         </span>
       </Tooltip>
+    ) : null;
+
+  const startAdornment = showChangeModeButton ? (
+    <>
+      <Tooltip content={localization.changeFilterMode}>
+        <span>
+          <Button
+            icon="filter-list"
+            aria-label={localization.changeFilterMode}
+            onClick={handleFilterMenuOpen}
+            small
+            css={{ height: '1.75rem', width: '1.75rem' }}
+          />
+        </span>
+      </Tooltip>
       {filterChipLabel && (
-        <Chip label={filterChipLabel} onDelete={handleClearEmptyFilterChip} />
+        <Tag onRemove={handleClearEmptyFilterChip}>{filterChipLabel}</Tag>
       )}
-    </InputAdornment>
+    </>
   ) : null;
 
   const commonTextFieldProps: TextFieldProps = {
@@ -379,7 +373,7 @@ export const MRT_FilterTextField = <TData extends MRT_RowData>({
           }}
         />
       ) : filterVariant?.startsWith('datetime') ? (
-        <DateTimePicker
+        <DateInput3
           {...commonDatePickerProps}
           {...dateTimePickerProps}
           slotProps={{
@@ -395,7 +389,7 @@ export const MRT_FilterTextField = <TData extends MRT_RowData>({
           }}
         />
       ) : filterVariant?.startsWith('date') ? (
-        <DatePicker
+        <DatePicker3
           {...commonDatePickerProps}
           {...datePickerProps}
           slotProps={{
@@ -424,7 +418,7 @@ export const MRT_FilterTextField = <TData extends MRT_RowData>({
           }
           {...autocompleteProps}
           renderInput={(builtinTextFieldProps) => (
-            <TextField
+            <InputGroup
               {...builtinTextFieldProps}
               {...commonTextFieldProps}
               InputProps={{
@@ -443,7 +437,7 @@ export const MRT_FilterTextField = <TData extends MRT_RowData>({
           value={autocompleteValue}
         />
       ) : (
-        <TextField
+        <InputGroup
           select={isSelectFilter || isMultiSelectFilter}
           {...commonTextFieldProps}
           SelectProps={{
@@ -511,7 +505,7 @@ export const MRT_FilterTextField = <TData extends MRT_RowData>({
                 }),
             ],
           ]}
-        </TextField>
+        </InputGroup>
       )}
       <MRT_FilterOptionMenu
         anchorEl={anchorEl}

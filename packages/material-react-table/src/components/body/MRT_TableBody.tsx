@@ -1,6 +1,5 @@
 import { memo, useMemo } from 'react';
 import { type VirtualItem } from '@tanstack/react-virtual';
-import Typography from '@mui/material/Typography';
 import { MRT_TableBodyRow, Memo_MRT_TableBodyRow } from './MRT_TableBodyRow';
 import { useMRT_RowVirtualizer } from '../../hooks/useMRT_RowVirtualizer';
 import { useMRT_Rows } from '../../hooks/useMRT_Rows';
@@ -11,6 +10,7 @@ import {
   type MRT_TableInstance,
 } from '../../types';
 import { parseFromValuesOrFunc } from '../../utils/utils';
+import { Typography } from '../primitives/Typography';
 
 export interface MRT_TableBodyProps<TData extends MRT_RowData>
   extends React.ComponentProps<'tbody'> {
@@ -79,7 +79,7 @@ export const MRT_TableBody = <TData extends MRT_RowData>({
     <>
       {!rowPinningDisplayMode?.includes('sticky') &&
         getIsSomeRowsPinned('top') && (
-          <body
+          <tbody
             {...tableBodyProps}
             css={(theme) => ({
               display: layoutMode?.startsWith('grid') ? 'grid' : undefined,
@@ -101,7 +101,7 @@ export const MRT_TableBody = <TData extends MRT_RowData>({
                 <MRT_TableBodyRow key={row.id} {...props} />
               );
             })}
-          </body>
+          </tbody>
         )}
       <tbody
         {...tableBodyProps}
@@ -130,7 +130,7 @@ export const MRT_TableBody = <TData extends MRT_RowData>({
               >
                 {renderEmptyRowsFallback?.({ table }) ?? (
                   <Typography
-                    sx={{
+                    css={{
                       color: 'text.secondary',
                       fontStyle: 'italic',
                       maxWidth: `min(100vw, ${

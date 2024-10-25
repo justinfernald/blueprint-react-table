@@ -1,9 +1,8 @@
 import { type DragEventHandler } from 'react';
-import Tooltip from '@mui/material/Tooltip';
 import { type MRT_RowData, type MRT_TableInstance } from '../../types';
 import { getCommonTooltipProps } from '../../utils/style.utils';
 import { parseFromValuesOrFunc } from '../../utils/utils';
-import { Button, ButtonProps } from '@blueprintjs/core';
+import { Button, ButtonProps, Tooltip } from '@blueprintjs/core';
 
 export interface MRT_GrabHandleButtonProps<TData extends MRT_RowData>
   extends ButtonProps {
@@ -29,7 +28,7 @@ export const MRT_GrabHandleButton = <TData extends MRT_RowData>({
   return (
     <Tooltip
       {...getCommonTooltipProps('top')}
-      title={rest?.title ?? localization.move}
+      content={rest?.title ?? localization.move}
     >
       <Button
         minimal

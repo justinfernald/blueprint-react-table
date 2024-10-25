@@ -1,11 +1,11 @@
 import { type ReactNode, type RefObject } from 'react';
-import Box from '@mui/material/Box';
 import {
   type MRT_Cell,
   type MRT_RowData,
   type MRT_TableInstance,
 } from '../../types';
 import highlightWords from 'highlight-words';
+import { Box } from '../primitives/Box';
 
 const allowedTypes = ['string', 'number'];
 
@@ -91,12 +91,12 @@ export const MRT_TableBodyCellValue = <TData extends MRT_RowData>({
               aria-hidden="true"
               component="span"
               key={key}
-              sx={
+              css={(theme) =>
                 match
                   ? {
                       backgroundColor: matchHighlightColor,
                       borderRadius: '2px',
-                      color: (theme) =>
+                      color:
                         theme.palette.mode === 'dark'
                           ? theme.palette.common.white
                           : theme.palette.common.black,

@@ -1,13 +1,10 @@
-import { Button, ButtonProps, Icon, Spinner } from '@blueprintjs/core';
-import Box, { type BoxProps } from '@mui/material/Box';
-import CircularProgress from '@mui/material/CircularProgress';
-import Tooltip from '@mui/material/Tooltip';
+import { Button, ButtonProps, Icon, Spinner, Tooltip } from '@blueprintjs/core';
 import {
   type MRT_Row,
   type MRT_RowData,
   type MRT_TableInstance,
 } from '../../types';
-import { parseFromValuesOrFunc } from '../../utils/utils';
+import { Box, BoxProps } from '../primitives/Box';
 
 export interface MRT_EditActionButtonsProps<TData extends MRT_RowData>
   extends BoxProps {
@@ -84,15 +81,15 @@ export const MRT_EditActionButtons = <TData extends MRT_RowData>({
   return (
     <Box
       onClick={(e) => e.stopPropagation()}
-      sx={(theme) => ({
+      css={(theme) => ({
         display: 'flex',
         gap: '0.75rem',
-        ...(parseFromValuesOrFunc(rest?.sx, theme) as any),
       })}
+      className={rest?.className}
     >
       {variant === 'icon' ? (
         <>
-          <Tooltip title={localization.cancel}>
+          <Tooltip content={localization.cancel}>
             <Button
               minimal
               icon="cross-circle"
@@ -102,7 +99,7 @@ export const MRT_EditActionButtons = <TData extends MRT_RowData>({
           </Tooltip>
           {((isCreating && onCreatingRowSave) ||
             (isEditing && onEditingRowSave)) && (
-            <Tooltip title={localization.save}>
+            <Tooltip content={localization.save}>
               <Button
                 minimal
                 aria-label={localization.save}

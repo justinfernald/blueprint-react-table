@@ -1,4 +1,3 @@
-import TableFooter, { type TableFooterProps } from '@mui/material/TableFooter';
 import { MRT_TableFooterRow } from './MRT_TableFooterRow';
 import {
   type MRT_ColumnVirtualizer,
@@ -7,8 +6,7 @@ import {
 } from '../../types';
 import { parseFromValuesOrFunc } from '../../utils/utils';
 
-export interface MRT_TableFooterProps<TData extends MRT_RowData>
-  extends TableFooterProps {
+export interface MRT_TableFooterProps<TData extends MRT_RowData> {
   columnVirtualizer?: MRT_ColumnVirtualizer;
   table: MRT_TableInstance<TData>;
 }
@@ -37,7 +35,7 @@ export const MRT_TableFooter = <TData extends MRT_RowData>({
     (isFullScreen || enableStickyFooter) && enableStickyFooter !== false;
 
   return (
-    <TableFooter
+    <tfoot
       {...tableFooterProps}
       ref={(ref: HTMLTableSectionElement) => {
         tableFooterRef.current = ref;
@@ -46,7 +44,7 @@ export const MRT_TableFooter = <TData extends MRT_RowData>({
           tableFooterProps.ref.current = ref;
         }
       }}
-      sx={(theme) => ({
+      css={(theme) => ({
         bottom: stickFooter ? 0 : undefined,
         display: layoutMode?.startsWith('grid') ? 'grid' : undefined,
         opacity: stickFooter ? 0.97 : undefined,
@@ -68,6 +66,6 @@ export const MRT_TableFooter = <TData extends MRT_RowData>({
           table={table}
         />
       ))}
-    </TableFooter>
+    </tfoot>
   );
 };

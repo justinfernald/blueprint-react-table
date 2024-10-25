@@ -1,8 +1,7 @@
-import Tooltip from '@mui/material/Tooltip';
 import { type MRT_RowData, type MRT_TableInstance } from '../../types';
 import { getCommonTooltipProps } from '../../utils/style.utils';
 import { parseFromValuesOrFunc } from '../../utils/utils';
-import { Button, ButtonProps, Icon } from '@blueprintjs/core';
+import { Button, ButtonProps, Icon, Tooltip } from '@blueprintjs/core';
 
 export interface MRT_ExpandAllButtonProps<TData extends MRT_RowData>
   extends ButtonProps {
@@ -40,7 +39,7 @@ export const MRT_ExpandAllButton = <TData extends MRT_RowData>({
   return (
     <Tooltip
       {...getCommonTooltipProps()}
-      title={
+      content={
         iconButtonProps?.title ??
         (isAllRowsExpanded ? localization.collapseAll : localization.expandAll)
       }

@@ -1,13 +1,5 @@
 import { type DragEvent, memo, useMemo, useRef } from 'react';
 import { type VirtualItem } from '@tanstack/react-virtual';
-import TableRow, { type TableRowProps } from '@mui/material/TableRow';
-import {
-  type Theme,
-  alpha,
-  darken,
-  lighten,
-  useTheme,
-} from '@mui/material/styles';
 import { MRT_TableBodyCell, Memo_MRT_TableBodyCell } from './MRT_TableBodyCell';
 import { MRT_TableDetailPanel } from './MRT_TableDetailPanel';
 import {
@@ -25,9 +17,10 @@ import {
   getCommonPinnedCellStyles,
 } from '../../utils/style.utils';
 import { parseFromValuesOrFunc } from '../../utils/utils';
+import { Theme, useTheme } from '@emotion/react';
+import { alpha } from '../../utils/color.utils';
 
-export interface MRT_TableBodyRowProps<TData extends MRT_RowData>
-  extends TableRowProps {
+export interface MRT_TableBodyRowProps<TData extends MRT_RowData> {
   columnVirtualizer?: MRT_ColumnVirtualizer;
   numRows?: number;
   pinnedRowIds?: string[];

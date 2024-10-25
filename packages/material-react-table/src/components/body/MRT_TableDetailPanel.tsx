@@ -1,7 +1,4 @@
 import { type RefObject } from 'react';
-import Collapse from '@mui/material/Collapse';
-import TableCell, { type TableCellProps } from '@mui/material/TableCell';
-import TableRow from '@mui/material/TableRow';
 import {
   type MRT_Row,
   type MRT_RowData,
@@ -11,8 +8,7 @@ import {
 } from '../../types';
 import { parseFromValuesOrFunc } from '../../utils/utils';
 
-export interface MRT_TableDetailPanelProps<TData extends MRT_RowData>
-  extends TableCellProps {
+export interface MRT_TableDetailPanelProps<TData extends MRT_RowData> {
   parentRowRef: RefObject<HTMLTableRowElement>;
   row: MRT_Row<TData>;
   rowVirtualizer?: MRT_RowVirtualizer;
@@ -61,7 +57,7 @@ export const MRT_TableDetailPanel = <TData extends MRT_RowData>({
   const DetailPanel = !isLoading && renderDetailPanel?.({ row, table });
 
   return (
-    <TableRow
+    <tr
       className="Mui-TableBodyCell-DetailPanel"
       data-index={renderDetailPanel ? staticRowIndex * 2 + 1 : staticRowIndex}
       ref={(node: HTMLTableRowElement) => {
@@ -70,7 +66,7 @@ export const MRT_TableDetailPanel = <TData extends MRT_RowData>({
         }
       }}
       {...tableRowProps}
-      sx={(theme) => ({
+      css={(theme) => ({
         display: layoutMode?.startsWith('grid') ? 'flex' : undefined,
         position: virtualRow ? 'absolute' : undefined,
         top: virtualRow
@@ -83,11 +79,11 @@ export const MRT_TableDetailPanel = <TData extends MRT_RowData>({
         ...(parseFromValuesOrFunc(tableRowProps?.sx, theme) as any),
       })}
     >
-      <TableCell
+      <td
         className="Mui-TableBodyCell-DetailPanel"
         colSpan={getVisibleLeafColumns().length}
         {...tableCellProps}
-        sx={(theme) => ({
+        css={(theme) => ({
           backgroundColor: virtualRow ? baseBackgroundColor : undefined,
           borderBottom: !row.getIsExpanded() ? 'none' : undefined,
           display: layoutMode?.startsWith('grid') ? 'flex' : undefined,
@@ -98,14 +94,14 @@ export const MRT_TableDetailPanel = <TData extends MRT_RowData>({
           ...(parseFromValuesOrFunc(tableCellProps?.sx, theme) as any),
         })}
       >
-        {virtualRow ? (
-          row.getIsExpanded() && DetailPanel
-        ) : (
-          <Collapse in={row.getIsExpanded()} mountOnEnter unmountOnExit>
-            {DetailPanel}
-          </Collapse>
-        )}
-      </TableCell>
-    </TableRow>
+        {
+          virtualRow
+            ? row.getIsExpanded() && DetailPanel
+            : // <Collapse in={row.getIsExpanded()} mountOnEnter unmountOnExit>
+              DetailPanel
+          // </Collapse>
+        }
+      </td>
+    </tr>
   );
 };

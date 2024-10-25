@@ -1,8 +1,7 @@
 import { type MouseEvent, useState } from 'react';
-import Tooltip from '@mui/material/Tooltip';
 import { type MRT_RowData, type MRT_TableInstance } from '../../types';
 import { MRT_ShowHideColumnsMenu } from '../menus/MRT_ShowHideColumnsMenu';
-import { Button, ButtonProps } from '@blueprintjs/core';
+import { Button, ButtonProps, Tooltip } from '@blueprintjs/core';
 
 export interface MRT_ShowHideColumnsButtonProps<TData extends MRT_RowData>
   extends ButtonProps {
@@ -25,7 +24,7 @@ export const MRT_ShowHideColumnsButton = <TData extends MRT_RowData>({
 
   return (
     <>
-      <Tooltip title={rest?.title ?? localization.showHideColumns}>
+      <Tooltip content={rest?.title ?? localization.showHideColumns}>
         <Button
           minimal
           icon="eye-open"

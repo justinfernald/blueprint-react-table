@@ -1,12 +1,10 @@
-import Badge from '@mui/material/Badge';
-import Tooltip from '@mui/material/Tooltip';
 import {
   type MRT_Header,
   type MRT_RowData,
   type MRT_TableInstance,
 } from '../../types';
 import { parseFromValuesOrFunc } from '../../utils/utils';
-import { Button, ButtonProps } from '@blueprintjs/core';
+import { Button, ButtonProps, Tag, Tooltip } from '@blueprintjs/core';
 
 export interface MRT_TableHeadCellSortLabelProps<TData extends MRT_RowData>
   extends ButtonProps {
@@ -48,11 +46,19 @@ export const MRT_TableHeadCellSortLabel = <TData extends MRT_RowData>({
     : undefined;
 
   return (
-    <Tooltip placement="top" title={sortTooltip}>
-      <Badge
-        badgeContent={sorting.length > 1 ? column.getSortIndex() + 1 : 0}
-        overlap="circular"
-      >
+    <Tooltip placement="top" content={sortTooltip}>
+      <div css={{ position: 'relative' }}>
+        <Tag
+          css={{
+            position: 'absolute',
+            top: 0,
+            right: 0,
+            transform: 'translate(50%, 50%)',
+          }}
+          content={`${sorting.length > 1 ? column.getSortIndex() + 1 : 0}`}
+          // badgeContent={sorting.length > 1 ? column.getSortIndex() + 1 : 0}
+          // overlap="circular"
+        />
         <Button
           minimal
           // IconComponent={
@@ -93,7 +99,7 @@ export const MRT_TableHeadCellSortLabel = <TData extends MRT_RowData>({
             ...(parseFromValuesOrFunc(rest?.css, theme) as any),
           })}
         />
-      </Badge>
+      </div>
     </Tooltip>
   );
 };

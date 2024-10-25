@@ -4,18 +4,15 @@ import {
   type KeyboardEvent,
   useState,
 } from 'react';
-import MenuItem from '@mui/material/MenuItem';
-import TextField from '@mui/material/TextField';
-import { type TextFieldProps } from '@mui/material/TextField';
 import {
   type MRT_Cell,
   type MRT_RowData,
   type MRT_TableInstance,
 } from '../../types';
 import { getValueAndLabel, parseFromValuesOrFunc } from '../../utils/utils';
+import { InputGroup, MenuItem } from '@blueprintjs/core';
 
-export interface MRT_EditCellTextFieldProps<TData extends MRT_RowData>
-  extends TextFieldProps<'standard'> {
+export interface MRT_EditCellTextFieldProps<TData extends MRT_RowData> {
   cell: MRT_Cell<TData>;
   table: MRT_TableInstance<TData>;
 }
@@ -43,21 +40,21 @@ export const MRT_EditCellTextField = <TData extends MRT_RowData>({
 
   const [value, setValue] = useState(() => cell.getValue<string>());
 
-  const textFieldProps: TextFieldProps = {
-    ...parseFromValuesOrFunc(muiEditTextFieldProps, {
-      cell,
-      column,
-      row,
-      table,
-    }),
-    ...parseFromValuesOrFunc(columnDef.muiEditTextFieldProps, {
-      cell,
-      column,
-      row,
-      table,
-    }),
-    ...rest,
-  };
+  // const textFieldProps: TextFieldProps = {
+  //   ...parseFromValuesOrFunc(muiEditTextFieldProps, {
+  //     cell,
+  //     column,
+  //     row,
+  //     table,
+  //   }),
+  //   ...parseFromValuesOrFunc(columnDef.muiEditTextFieldProps, {
+  //     cell,
+  //     column,
+  //     row,
+  //     table,
+  //   }),
+  //   ...rest,
+  // };
 
   const selectOptions = parseFromValuesOrFunc(editSelectOptions, {
     cell,
@@ -66,7 +63,7 @@ export const MRT_EditCellTextField = <TData extends MRT_RowData>({
     table,
   });
 
-  const isSelectEdit = editVariant === 'select' || textFieldProps?.select;
+  const isSelectEdit = editVariant === 'select'; // || textFieldProps?.select;
 
   const saveInputValueToRowCache = (newValue: string) => {
     //@ts-ignore
@@ -79,7 +76,7 @@ export const MRT_EditCellTextField = <TData extends MRT_RowData>({
   };
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-    textFieldProps.onChange?.(event);
+    // textFieldProps.onChange?.(event);
     setValue(event.target.value);
     if (isSelectEdit) {
       saveInputValueToRowCache(event.target.value);
@@ -87,13 +84,13 @@ export const MRT_EditCellTextField = <TData extends MRT_RowData>({
   };
 
   const handleBlur = (event: FocusEvent<HTMLInputElement>) => {
-    textFieldProps.onBlur?.(event);
+    // textFieldProps.onBlur?.(event);
     saveInputValueToRowCache(value);
     setEditingCell(null);
   };
 
   const handleEnterKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
-    textFieldProps.onKeyDown?.(event);
+    // textFieldProps.onKeyDown?.(event);
     if (event.key === 'Enter' && !event.shiftKey) {
       editInputRefs.current[column.id]?.blur();
     }
@@ -104,25 +101,25 @@ export const MRT_EditCellTextField = <TData extends MRT_RowData>({
   }
 
   return (
-    <TextField
+    <InputGroup
       disabled={parseFromValuesOrFunc(columnDef.enableEditing, row) === false}
-      fullWidth
-      inputRef={(inputRef) => {
-        if (inputRef) {
-          editInputRefs.current[column.id] = inputRef;
-          if (textFieldProps.inputRef) {
-            textFieldProps.inputRef = inputRef;
-          }
-        }
-      }}
-      label={
-        ['custom', 'modal'].includes(
-          (isCreating ? createDisplayMode : editDisplayMode) as string,
-        )
-          ? columnDef.header
-          : undefined
-      }
-      margin="none"
+      fill
+      // inputRef={(inputRef) => {
+      //   if (inputRef) {
+      //     editInputRefs.current[column.id] = inputRef;
+      //     if (textFieldProps.inputRef) {
+      //       textFieldProps.inputRef = inputRef;
+      //     }
+      //   }
+      // }}
+      // label={
+      //   ['custom', 'modal'].includes(
+      //     (isCreating ? createDisplayMode : editDisplayMode) as string,
+      //   )
+      //     ? columnDef.header
+      //     : undefined
+      // }
+      // margin="none"
       name={column.id}
       placeholder={
         !['custom', 'modal'].includes(
@@ -131,58 +128,55 @@ export const MRT_EditCellTextField = <TData extends MRT_RowData>({
           ? columnDef.header
           : undefined
       }
-      select={isSelectEdit}
-      size="small"
+      // select={isSelectEdit}
+      small
       value={value ?? ''}
-      variant="standard"
-      {...textFieldProps}
-      InputProps={{
-        ...(textFieldProps.variant !== 'outlined'
-          ? { disableUnderline: editDisplayMode === 'table' }
-          : {}),
-        ...textFieldProps.InputProps,
-        sx: (theme) => ({
-          marginBottom: 0,
-          ...(parseFromValuesOrFunc(
-            textFieldProps?.InputProps?.sx,
-            theme,
-          ) as any),
-        }),
-      }}
-      SelectProps={{
-        MenuProps: { disableScrollLock: true },
-        ...textFieldProps.SelectProps,
-      }}
-      inputProps={{
-        autoComplete: 'new-password', //disable autocomplete and autofill
-        ...textFieldProps.inputProps,
-      }}
+      // {...textFieldProps}
+      // InputProps={{
+      //   ...(textFieldProps.variant !== 'outlined'
+      //     ? { disableUnderline: editDisplayMode === 'table' }
+      //     : {}),
+      //   ...textFieldProps.InputProps,
+      //   sx: (theme) => ({
+      //     marginBottom: 0,
+      //     ...(parseFromValuesOrFunc(
+      //       textFieldProps?.InputProps?.sx,
+      //       theme,
+      //     ) as any),
+      //   }),
+      // }}
+      // SelectProps={{
+      //   MenuProps: { disableScrollLock: true },
+      //   ...textFieldProps.SelectProps,
+      // }}
+      // inputProps={{
+      //   autoComplete: 'new-password', //disable autocomplete and autofill
+      //   ...textFieldProps.inputProps,
+      // }}
       onBlur={handleBlur}
       onChange={handleChange}
       onClick={(e) => {
         e.stopPropagation();
-        textFieldProps?.onClick?.(e);
+        // textFieldProps?.onClick?.(e);
       }}
       onKeyDown={handleEnterKeyDown}
     >
-      {textFieldProps.children ??
-        selectOptions?.map((option) => {
-          const { label, value } = getValueAndLabel(option);
-          return (
-            <MenuItem
-              key={value}
-              sx={{
-                alignItems: 'center',
-                display: 'flex',
-                gap: '0.5rem',
-                margin: 0,
-              }}
-              value={value}
-            >
-              {label}
-            </MenuItem>
-          );
-        })}
-    </TextField>
+      {selectOptions?.map((option) => {
+        const { label, value } = getValueAndLabel(option);
+        return (
+          <MenuItem
+            key={value}
+            css={{
+              alignItems: 'center',
+              display: 'flex',
+              gap: '0.5rem',
+              margin: 0,
+            }}
+            text={value}
+            label={label}
+          />
+        );
+      })}
+    </InputGroup>
   );
 };

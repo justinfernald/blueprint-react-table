@@ -65,9 +65,6 @@
     "@emotion/react": "^11.11.4",
     "@emotion/styled": "^11.11.5",
     "@faker-js/faker": "^8.4.1",
-    "@mui/icons-material": "^5.15.19",
-    "@mui/material": "^5.15.19",
-    "@mui/x-date-pickers": "^7.6.1",
     "@rollup/plugin-typescript": "^11.1.6",
     "@size-limit/preset-small-lib": "^11.1.4",
     "@storybook/addon-a11y": "^8.1.5",
@@ -81,6 +78,7 @@
     "@types/node": "^20.14.0",
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",
+    "@types/tinycolor2": "^1.4.6",
     "@typescript-eslint/eslint-plugin": "^7.12.0",
     "@typescript-eslint/parser": "^7.12.0",
     "@vitejs/plugin-react": "^4.3.0",
@@ -110,16 +108,19 @@
     "@blueprintjs/select": "5.1.5",
     "@emotion/react": ">=11.11",
     "@emotion/styled": ">=11.11",
-    "@mui/icons-material": ">=5.11",
-    "@mui/material": ">=5.13",
-    "@mui/x-date-pickers": ">=6.15.0",
     "react": ">=17.0",
     "react-dom": ">=17.0"
   },
   "dependencies": {
+    "@blueprintjs/datetime": "^5.3.11",
+    "@blueprintjs/datetime2": "^2.3.11",
+    "@mui/icons-material": "^5.15.19",
+    "@mui/material": "^5.15.19",
+    "@mui/x-date-pickers": "^7.6.1",
     "@tanstack/match-sorter-utils": "8.15.1",
     "@tanstack/react-table": "8.17.3",
     "@tanstack/react-virtual": "3.5.0",
-    "highlight-words": "1.2.2"
+    "highlight-words": "1.2.2",
+    "tinycolor2": "^1.6.0"
   }
 }

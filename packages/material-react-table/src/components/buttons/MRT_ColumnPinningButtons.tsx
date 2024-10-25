@@ -1,12 +1,11 @@
-import Box, { type BoxProps } from '@mui/material/Box';
-import Tooltip from '@mui/material/Tooltip';
 import {
   type MRT_Column,
   type MRT_RowData,
   type MRT_TableInstance,
 } from '../../types';
 import { parseFromValuesOrFunc } from '../../utils/utils';
-import { Button } from '@blueprintjs/core';
+import { Button, Tooltip } from '@blueprintjs/core';
+import { Box, BoxProps } from '../primitives/Box';
 
 export interface MRT_ColumnPinningButtonsProps<TData extends MRT_RowData>
   extends BoxProps {
@@ -33,14 +32,14 @@ export const MRT_ColumnPinningButtons = <TData extends MRT_RowData>({
   return (
     <Box
       {...rest}
-      sx={(theme) => ({
+      css={(theme) => ({
         minWidth: '70px',
         textAlign: 'center',
-        ...(parseFromValuesOrFunc(rest?.sx, theme) as any),
       })}
+      className={rest.className}
     >
       {column.getIsPinned() ? (
-        <Tooltip title={localization.unpin}>
+        <Tooltip content={localization.unpin}>
           <Button
             minimal
             icon="pin"
@@ -50,7 +49,7 @@ export const MRT_ColumnPinningButtons = <TData extends MRT_RowData>({
         </Tooltip>
       ) : (
         <>
-          <Tooltip title={localization.pinToLeft}>
+          <Tooltip content={localization.pinToLeft}>
             <Button
               minimal
               icon="pin"
@@ -61,7 +60,7 @@ export const MRT_ColumnPinningButtons = <TData extends MRT_RowData>({
               }}
             />
           </Tooltip>
-          <Tooltip title={localization.pinToRight}>
+          <Tooltip content={localization.pinToRight}>
             <Button
               minimal
               icon="pin"

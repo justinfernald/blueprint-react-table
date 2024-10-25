@@ -1,4 +1,3 @@
-import Collapse, { type CollapseProps } from '@mui/material/Collapse';
 import {
   type MRT_Header,
   type MRT_RowData,
@@ -12,7 +11,7 @@ import { MRT_FilterTextField } from '../inputs/MRT_FilterTextField';
 
 export interface MRT_TableHeadCellFilterContainerProps<
   TData extends MRT_RowData,
-> extends CollapseProps {
+> {
   header: MRT_Header<TData>;
   table: MRT_TableInstance<TData>;
 }
@@ -32,12 +31,13 @@ export const MRT_TableHeadCellFilterContainer = <TData extends MRT_RowData>({
   const { isRangeFilter } = getColumnFilterInfo({ header, table });
 
   return (
-    <Collapse
+    <>
+      {/* <Collapse
       in={showColumnFilters || columnFilterDisplayMode === 'popover'}
       mountOnEnter
       unmountOnExit
       {...rest}
-    >
+    > */}
       {columnDef.filterVariant === 'checkbox' ? (
         <MRT_FilterCheckbox column={column} table={table} />
       ) : columnDef.filterVariant === 'range-slider' ? (
@@ -47,6 +47,7 @@ export const MRT_TableHeadCellFilterContainer = <TData extends MRT_RowData>({
       ) : (
         <MRT_FilterTextField header={header} table={table} />
       )}
-    </Collapse>
+      {/* </Collapse> */}
+    </>
   );
 };

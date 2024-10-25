@@ -1,5 +1,4 @@
 import { type MouseEvent, useState } from 'react';
-import Tooltip from '@mui/material/Tooltip';
 import {
   type MRT_Header,
   type MRT_RowData,
@@ -8,7 +7,7 @@ import {
 import { getCommonTooltipProps } from '../../utils/style.utils';
 import { parseFromValuesOrFunc } from '../../utils/utils';
 import { MRT_ColumnActionMenu } from '../menus/MRT_ColumnActionMenu';
-import { Button, ButtonProps, Icon } from '@blueprintjs/core';
+import { Button, ButtonProps, Icon, Tooltip } from '@blueprintjs/core';
 
 export interface MRT_TableHeadCellColumnActionsButtonProps<
   TData extends MRT_RowData,
@@ -48,7 +47,7 @@ export const MRT_TableHeadCellColumnActionsButton = <
     <>
       <Tooltip
         {...getCommonTooltipProps('top')}
-        title={iconButtonProps?.title ?? localization.columnActions}
+        content={iconButtonProps?.title ?? localization.columnActions}
       >
         <MRT_ColumnActionMenu
           onClick={() => setIsOpen((v) => !v)}

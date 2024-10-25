@@ -1,4 +1,3 @@
-import TableHead, { type TableHeadProps } from '@mui/material/TableHead';
 import { MRT_TableHeadRow } from './MRT_TableHeadRow';
 import {
   type MRT_ColumnVirtualizer,
@@ -8,8 +7,7 @@ import {
 import { parseFromValuesOrFunc } from '../../utils/utils';
 import { MRT_ToolbarAlertBanner } from '../toolbar/MRT_ToolbarAlertBanner';
 
-export interface MRT_TableHeadProps<TData extends MRT_RowData>
-  extends TableHeadProps {
+export interface MRT_TableHeadProps<TData extends MRT_RowData> {
   columnVirtualizer?: MRT_ColumnVirtualizer;
   table: MRT_TableInstance<TData>;
 }

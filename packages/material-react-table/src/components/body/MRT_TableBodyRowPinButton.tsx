@@ -1,5 +1,3 @@
-import Box from '@mui/material/Box';
-import { type IconButtonProps } from '@mui/material/IconButton';
 import {
   type MRT_Row,
   type MRT_RowData,
@@ -7,9 +5,9 @@ import {
 } from '../../types';
 import { parseFromValuesOrFunc } from '../../utils/utils';
 import { MRT_RowPinButton } from '../buttons/MRT_RowPinButton';
+import { Box } from '../primitives/Box';
 
-export interface MRT_TableBodyRowPinButtonProps<TData extends MRT_RowData>
-  extends IconButtonProps {
+export interface MRT_TableBodyRowPinButtonProps<TData extends MRT_RowData> {
   row: MRT_Row<TData>;
   table: MRT_TableInstance<TData>;
 }
@@ -38,7 +36,7 @@ export const MRT_TableBodyRowPinButton = <TData extends MRT_RowData>({
   if (rowPinningDisplayMode === 'top-and-bottom' && !row.getIsPinned()) {
     return (
       <Box
-        sx={{
+        css={{
           display: 'flex',
           flexDirection: density === 'compact' ? 'row' : 'column',
         }}

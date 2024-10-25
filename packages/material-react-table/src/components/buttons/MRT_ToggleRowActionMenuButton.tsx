@@ -1,6 +1,5 @@
 import { type MouseEvent, useState } from 'react';
-import { Button, ButtonProps } from '@blueprintjs/core';
-import Tooltip from '@mui/material/Tooltip';
+import { Button, ButtonProps, Tooltip } from '@blueprintjs/core';
 import { MRT_EditActionButtons } from './MRT_EditActionButtons';
 import {
   type MRT_Cell,
@@ -83,7 +82,7 @@ export const MRT_ToggleRowActionMenuButton = <TData extends MRT_RowData>({
       ) : !renderRowActionMenuItems &&
         parseFromValuesOrFunc(enableEditing, row) &&
         ['modal', 'row'].includes(editDisplayMode!) ? (
-        <Tooltip placement="right" title={localization.edit}>
+        <Tooltip position="right" content={localization.edit}>
           <Button
             minimal
             icon="edit"
@@ -95,7 +94,10 @@ export const MRT_ToggleRowActionMenuButton = <TData extends MRT_RowData>({
         </Tooltip>
       ) : renderRowActionMenuItems ? (
         <>
-          <Tooltip {...getCommonTooltipProps()} title={localization.rowActions}>
+          <Tooltip
+            {...getCommonTooltipProps()}
+            content={localization.rowActions}
+          >
             <Button
               minimal
               icon="more"

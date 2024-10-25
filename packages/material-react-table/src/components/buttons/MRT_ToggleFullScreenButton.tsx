@@ -1,6 +1,5 @@
 import { useState } from 'react';
-import { Button, ButtonProps } from '@blueprintjs/core';
-import Tooltip from '@mui/material/Tooltip';
+import { Button, ButtonProps, Tooltip } from '@blueprintjs/core';
 import { type MRT_RowData, type MRT_TableInstance } from '../../types';
 
 export interface MRT_ToggleFullScreenButtonProps<TData extends MRT_RowData>
@@ -28,8 +27,8 @@ export const MRT_ToggleFullScreenButton = <TData extends MRT_RowData>({
 
   return (
     <Tooltip
-      open={tooltipOpened}
-      title={rest?.title ?? localization.toggleFullScreen}
+      isOpen={tooltipOpened}
+      content={rest?.title ?? localization.toggleFullScreen}
     >
       <Button
         minimal

@@ -1,16 +1,13 @@
 import { useEffect, useRef, useState } from 'react';
-import FormHelperText from '@mui/material/FormHelperText';
-import Slider, { type SliderProps } from '@mui/material/Slider';
-import Stack from '@mui/material/Stack';
 import {
   type MRT_Header,
   type MRT_RowData,
   type MRT_TableInstance,
 } from '../../types';
 import { parseFromValuesOrFunc } from '../../utils/utils';
+import { MultiSlider } from '@blueprintjs/core';
 
-export interface MRT_FilterRangeSliderProps<TData extends MRT_RowData>
-  extends SliderProps {
+export interface MRT_FilterRangeSliderProps<TData extends MRT_RowData> {
   header: MRT_Header<TData>;
   table: MRT_TableInstance<TData>;
 }
@@ -66,72 +63,24 @@ export const MRT_FilterRangeSlider = <TData extends MRT_RowData>({
   }, [columnFilterValue, min, max]);
 
   return (
-    <Stack>
-      <Slider
-        disableSwap
-        max={max}
-        min={min}
-        onChange={(_event, values) => {
-          setFilterValues(values as [number, number]);
-        }}
-        onChangeCommitted={(_event, value) => {
-          if (Array.isArray(value)) {
-            if (value[0] <= min && value[1] >= max) {
-              //if the user has selected the entire range, remove the filter
-              column.setFilterValue(undefined);
-            } else {
-              column.setFilterValue(value as [number, number]);
-            }
-          }
-        }}
-        value={filterValues}
-        valueLabelDisplay="auto"
-        {...sliderProps}
-        slotProps={{
-          input: {
-            ref: (node) => {
-              if (node) {
-                filterInputRefs.current[`${column.id}-0`] = node;
-                // @ts-ignore
-                if (sliderProps?.slotProps?.input?.ref) {
-                  //@ts-ignore
-                  sliderProps.slotProps.input.ref = node;
-                }
-              }
-            },
-          },
-        }}
-        sx={(theme) => ({
-          margin: 'auto',
-          minWidth: `${column.getSize() - 50}px`,
-          marginTop: !showChangeModeButton ? '10px' : '6px',
-          paddingLeft: '4px',
-          paddingRight: '4px',
-          width: 'calc(100% - 8px)',
-          ...(parseFromValuesOrFunc(sliderProps?.sx, theme) as any),
-        })}
-      />
-      {showChangeModeButton ? (
-        <FormHelperText
-          sx={{
-            fontSize: '0.75rem',
-            lineHeight: '0.8rem',
-            margin: '-3px -6px',
-            whiteSpace: 'nowrap',
-          }}
-        >
-          {localization.filterMode.replace(
-            '{filterType}',
-            // @ts-ignore
-            localization[
-              `filter${
-                currentFilterOption?.charAt(0)?.toUpperCase() +
-                currentFilterOption?.slice(1)
-              }`
-            ],
-          )}
-        </FormHelperText>
-      ) : null}
-    </Stack>
+    <MultiSlider
+      disableSwap
+      max={max}
+      min={min}
+      onChange={(values) => {
+        setFilterValues(values as [number, number]);
+      }}
+      value={filterValues}
+      valueLabelDisplay="auto"
+      {...sliderProps}
+      css={(theme) => ({
+        margin: 'auto',
+        minWidth: `${column.getSize() - 50}px`,
+        marginTop: !showChangeModeButton ? '10px' : '6px',
+        paddingLeft: '4px',
+        paddingRight: '4px',
+        width: 'calc(100% - 8px)',
+      })}
+    />
   );
 };

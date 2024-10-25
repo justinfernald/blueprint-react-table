@@ -1,5 +1,4 @@
 import { type MouseEvent, useState } from 'react';
-import Tooltip from '@mui/material/Tooltip';
 import {
   type MRT_Cell,
   type MRT_RowData,
@@ -7,7 +6,7 @@ import {
 } from '../../types';
 import { getCommonTooltipProps } from '../../utils/style.utils';
 import { parseFromValuesOrFunc } from '../../utils/utils';
-import { Button, ButtonProps } from '@blueprintjs/core';
+import { Button, ButtonProps, Tooltip } from '@blueprintjs/core';
 
 export interface MRT_CopyButtonProps<TData extends MRT_RowData>
   extends ButtonProps {
@@ -61,10 +60,12 @@ export const MRT_CopyButton = <TData extends MRT_RowData>({
     >
       <Button
         minimal
-        onClick={((e) => handleCopy(e, cell.getValue())) as any}
-        size="small"
+        onClick={
+          ((e: MouseEvent<Element, globalThis.MouseEvent>) =>
+            handleCopy(e, cell.getValue())) as any
+        }
+        small
         type="button"
-        variant="text"
         {...buttonProps}
         css={(theme: any) => ({
           backgroundColor: 'transparent',
@@ -80,8 +81,8 @@ export const MRT_CopyButton = <TData extends MRT_RowData>({
           paddingBottom: 0,
           textAlign: 'inherit',
           textTransform: 'inherit',
-          ...(parseFromValuesOrFunc(buttonProps?.sx, theme) as any),
         })}
+        className={buttonProps?.className}
         title={undefined}
       />
     </Tooltip>

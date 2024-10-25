@@ -1,7 +1,5 @@
 import { type MouseEvent, useState } from 'react';
 import { type RowPinningPosition } from '@tanstack/react-table';
-import IconButton, { type IconButtonProps } from '@mui/material/IconButton';
-import Tooltip from '@mui/material/Tooltip';
 import {
   type MRT_Row,
   type MRT_RowData,
@@ -9,9 +7,10 @@ import {
 } from '../../types';
 import { getCommonTooltipProps } from '../../utils/style.utils';
 import { parseFromValuesOrFunc } from '../../utils/utils';
+import { Button, ButtonProps, Tooltip } from '@blueprintjs/core';
 
 export interface MRT_RowPinButtonProps<TData extends MRT_RowData>
-  extends IconButtonProps {
+  extends ButtonProps {
   pinningPosition: RowPinningPosition;
   row: MRT_Row<TData>;
   table: MRT_TableInstance<TData>;
@@ -44,21 +43,21 @@ export const MRT_RowPinButton = <TData extends MRT_RowData>({
   return (
     <Tooltip
       {...getCommonTooltipProps()}
-      open={tooltipOpened}
-      title={isPinned ? localization.unpin : localization.pin}
+      isOpen={tooltipOpened}
+      content={isPinned ? localization.unpin : localization.pin}
     >
-      <IconButton
+      <Button
         aria-label={localization.pin}
-        onClick={handleTogglePin}
+        onClick={handleTogglePin as any}
         onMouseEnter={() => setTooltipOpened(true)}
         onMouseLeave={() => setTooltipOpened(false)}
-        size="small"
+        small
         {...rest}
-        sx={(theme) => ({
+        css={(theme) => ({
           height: '24px',
           width: '24px',
-          ...(parseFromValuesOrFunc(rest?.sx, theme) as any),
         })}
+        className={rest.className}
       >
         {isPinned ? (
           <CloseIcon />
@@ -76,7 +75,7 @@ export const MRT_RowPinButton = <TData extends MRT_RowData>({
             }}
           />
         )}
-      </IconButton>
+      </Button>
     </Tooltip>
   );
 };

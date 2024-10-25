@@ -1,6 +1,4 @@
 import { type MouseEvent } from 'react';
-import Tooltip from '@mui/material/Tooltip';
-import { useTheme } from '@mui/material/styles';
 import {
   type MRT_Row,
   type MRT_RowData,
@@ -8,7 +6,8 @@ import {
 } from '../../types';
 import { getCommonTooltipProps } from '../../utils/style.utils';
 import { parseFromValuesOrFunc } from '../../utils/utils';
-import { Button, ButtonProps, Icon } from '@blueprintjs/core';
+import { Button, ButtonProps, Icon, Tooltip } from '@blueprintjs/core';
+import { useTheme } from '@emotion/react';
 
 export interface MRT_ExpandButtonProps<TData extends MRT_RowData>
   extends ButtonProps {
@@ -53,9 +52,10 @@ export const MRT_ExpandButton = <TData extends MRT_RowData>({
 
   return (
     <Tooltip
-      disableHoverListener={!canExpand && !detailPanel}
+      disabled={!canExpand && !detailPanel}
+      // disableHoverListener={!canExpand && !detailPanel}
       {...getCommonTooltipProps()}
-      title={
+      content={
         iconButtonProps?.title ??
         (isExpanded ? localization.collapse : localization.expand)
       }

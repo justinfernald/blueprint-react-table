@@ -1,8 +1,4 @@
 import { type DragEvent, useMemo } from 'react';
-import Box from '@mui/material/Box';
-import TableCell, { type TableCellProps } from '@mui/material/TableCell';
-import { useTheme } from '@mui/material/styles';
-import { type Theme } from '@mui/material/styles';
 import { MRT_TableHeadCellColumnActionsButton } from './MRT_TableHeadCellColumnActionsButton';
 import { MRT_TableHeadCellFilterContainer } from './MRT_TableHeadCellFilterContainer';
 import { MRT_TableHeadCellFilterLabel } from './MRT_TableHeadCellFilterLabel';
@@ -17,9 +13,10 @@ import {
 } from '../../types';
 import { getCommonMRTCellStyles } from '../../utils/style.utils';
 import { parseFromValuesOrFunc } from '../../utils/utils';
+import { Theme, useTheme } from '@emotion/react';
+import { Box } from '../primitives/Box';
 
-export interface MRT_TableHeadCellProps<TData extends MRT_RowData>
-  extends TableCellProps {
+export interface MRT_TableHeadCellProps<TData extends MRT_RowData> {
   columnVirtualizer?: MRT_ColumnVirtualizer;
   header: MRT_Header<TData>;
   staticColumnIndex?: number;
@@ -228,7 +225,7 @@ export const MRT_TableHeadCell = <TData extends MRT_RowData>({
         : tableCellProps.children ?? (
             <Box
               className="Mui-TableHeadCell-Content"
-              sx={{
+              css={{
                 alignItems: 'center',
                 display: 'flex',
                 flexDirection:
@@ -247,7 +244,7 @@ export const MRT_TableHeadCell = <TData extends MRT_RowData>({
               <Box
                 className="Mui-TableHeadCell-Content-Labels"
                 onClick={column.getToggleSortingHandler()}
-                sx={{
+                css={{
                   alignItems: 'center',
                   cursor:
                     column.getCanSort() && columnDefType !== 'group'
@@ -265,7 +262,7 @@ export const MRT_TableHeadCell = <TData extends MRT_RowData>({
               >
                 <Box
                   className="Mui-TableHeadCell-Content-Wrapper"
-                  sx={{
+                  css={{
                     '&:hover': {
                       textOverflow: 'clip',
                     },
@@ -290,7 +287,7 @@ export const MRT_TableHeadCell = <TData extends MRT_RowData>({
               {columnDefType !== 'group' && (
                 <Box
                   className="Mui-TableHeadCell-Content-Actions"
-                  sx={{
+                  css={{
                     whiteSpace: 'nowrap',
                   }}
                 >

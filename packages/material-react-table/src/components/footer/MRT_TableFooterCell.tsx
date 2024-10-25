@@ -1,5 +1,4 @@
-import TableCell, { type TableCellProps } from '@mui/material/TableCell';
-import { useTheme } from '@mui/material/styles';
+import { useTheme } from '@emotion/react';
 import {
   type MRT_Header,
   type MRT_RowData,
@@ -8,8 +7,7 @@ import {
 import { getCommonMRTCellStyles } from '../../utils/style.utils';
 import { parseFromValuesOrFunc } from '../../utils/utils';
 
-export interface MRT_TableFooterCellProps<TData extends MRT_RowData>
-  extends TableCellProps {
+export interface MRT_TableFooterCellProps<TData extends MRT_RowData> {
   footer: MRT_Header<TData>;
   staticColumnIndex?: number;
   table: MRT_TableInstance<TData>;
@@ -44,7 +42,7 @@ export const MRT_TableFooterCell = <TData extends MRT_RowData>({
   };
 
   return (
-    <TableCell
+    <td
       align={
         columnDefType === 'group'
           ? 'center'
@@ -57,7 +55,7 @@ export const MRT_TableFooterCell = <TData extends MRT_RowData>({
       data-pinned={!!isColumnPinned || undefined}
       variant="footer"
       {...tableCellProps}
-      sx={(theme) => ({
+      css={(theme) => ({
         fontWeight: 'bold',
         p:
           density === 'compact'
@@ -86,6 +84,6 @@ export const MRT_TableFooterCell = <TData extends MRT_RowData>({
             }) ??
             columnDef.footer ??
             null)}
-    </TableCell>
+    </td>
   );
 };
